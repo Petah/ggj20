@@ -9,6 +9,14 @@ class LevelController extends Controller
     const IMAGES = [
         'smiley' => [
             'name' => 'Smiley Face',
+            'timeLimit' => 60,
+            'debuffs' => [
+                [
+                    'startTime' => 10,
+                    'duration' => 5,
+                    'type' => 'drip',
+                ],
+            ],
             'colors' => [
                 [
                     'name' => 'Yellow',
@@ -26,6 +34,19 @@ class LevelController extends Controller
         ],
         'unicorn' => [
             'name' => 'Unicorn',
+            'timeLimit' => 180,
+            'debuffs' => [
+                [
+                    'startTime' => 60,
+                    'duration' => 10,
+                    'type' => 'enlarge',
+                ],
+                [
+                    'startTime' => 120,
+                    'duration' => 10,
+                    'type' => 'drip',
+                ],
+            ],
             'colors' => [
                 [
                     'hex' => '#650e41',
@@ -70,13 +91,11 @@ class LevelController extends Controller
             $levels[] = [
                 'id' => uniqid('uid-'),
                 'type' => 'Level',
-                'attributes' => [
-                    'name' => $data['name'],
+                'attributes' => array_merge($data, [
                     'url' => $repairImage,
                     'width' => $width,
                     'height' => $height,
-                    'colors' => $data['colors'],
-                ],
+                ]),
             ];
         }
 

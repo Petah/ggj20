@@ -10,7 +10,7 @@ const ScoreController = function (
     let interval = null;
 
     $scope.$on('selectLevel', (event, level) => {
-        $ctrl.levelTime = 10;
+        $ctrl.levelTime = level.attributes.timeLimit;
         $ctrl.timeRemaining = $ctrl.levelTime;
         $ctrl.startTime = new Date().getTime();
         $ctrl.score = 0;
@@ -25,6 +25,15 @@ const ScoreController = function (
                 $ctrl.timeRemaining = 0;
                 $interval.cancel(interval);
                 $rootScope.$broadcast('timeUp');
+            }
+
+            let i = level.attributes.debuffs.length
+            while (i--) {
+                const debuff = level.attributes.debuffs[i]
+                if (debuff.startTime > $ctrl.levelTime - $ctrl.timeRemaining) {
+                    level.attributes.debuffs.splice(i, 1);
+                    $rootScope.$broadcast('debuff', debuff);
+                }
             }
         }, 25);
     });
