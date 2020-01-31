@@ -263,9 +263,9 @@ class CompareController extends Controller
         } else {
             // $score = ($userScore - $repairScore) / (100.0 - $repairScore) * 50.0 + 50.0;
             $score = ($userScore - $repairScore) / (100.0 - $repairScore) * 100.0;
-            if ($score < 0) {
-                $score = 0.0;
-            }
+            // if ($score < 0) {
+            //     $score = 0.0;
+            // }
             return $score;
         }
     }
