@@ -1,3 +1,7 @@
 <div class="g-palette">
     <h1>PALETTE</h1>
+    <div ng-repeat="color in $ctrl.colors">
+        <button class="btn" type="button" ng-style="{ backgroundColor: color.hex }" ng-click="$ctrl.changeColor(color)">{{ color.name }}</button>
+    </div>
+    <img ng-src="images/palette.png" />
 </div>
