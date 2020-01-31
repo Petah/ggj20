@@ -18,12 +18,22 @@ body {
     padding: 0;
 }
 
-g-canvas {
+.g-canvas {
 
 }
 
-g-palette {
+.g-palette {
     img {
         max-width: 500px;
+    }
+}
+
+.g-level-select {
+    img {
+        max-width: 100px;
+    }
+
+    .g-level-select-level {
+        cursor: pointer;
     }
 }

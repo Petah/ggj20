@@ -5,6 +5,7 @@ import Game from "./components/game/game";
 import Palette from "./components/palette/palette";
 
 import RootController from "./controllers/root";
+import LevelSelect from "./components/level-select/level-select";
 
 try {
     // Init Angular App
@@ -13,12 +14,13 @@ try {
         .component("gGame", Game)
         .component("gCanvas", Canvas)
         .component("gPalette", Palette)
+        .component("gLevelSelect", LevelSelect)
         .controller("gRootController", RootController);
 
     app.config([
         "$httpProvider",
         "$locationProvider",
-        function($httpProvider, $locationProvider) {
+        function ($httpProvider, $locationProvider) {
             $locationProvider.html5Mode({
                 enabled: true,
                 requireBase: false,
@@ -28,7 +30,7 @@ try {
             $httpProvider.defaults.xsrfHeaderName = "X-CSRF-TOKEN";
             $httpProvider.defaults.xsrfCookieName = "XSRF-TOKEN";
 
-            $httpProvider.defaults.transformRequest = function(data) {
+            $httpProvider.defaults.transformRequest = function (data) {
                 if (data === undefined) {
                     return data;
                 }
@@ -41,7 +43,7 @@ try {
         },
     ]);
 
-    angular.element(function() {
+    angular.element(function () {
         angular.bootstrap(document, ["GGJ2020"]);
     });
 

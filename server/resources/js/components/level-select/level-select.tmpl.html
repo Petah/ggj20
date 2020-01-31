@@ -1,0 +1,9 @@
+<div class="g-level-select">
+    <h1>LEVEL SELECT</h1>
+    <div class="row">
+        <div ng-repeat="level in $ctrl.levels" class="col g-level-select-level" ng-click="$ctrl.selectLevel(level)">
+            <div>{{ level.attributes.name }}</div>
+            <img ng-src="{{ level.attributes.url }}" />
+        </div>
+    </div>
+</div>

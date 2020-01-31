@@ -19,13 +19,14 @@ class LevelController extends Controller
     {
         $levels = [];
         foreach (static::IMAGES as $image => $data) {
-            [$width, $height] = getimagesize(public_path('images/levels/' . $image . '-repair.png'));
+            $repairImage = 'images/levels/' . $image . '-repair.png';
+            [$width, $height] = getimagesize(public_path($repairImage));
             $levels[] = [
                 'id' => uniqid('uid-'),
                 'type' => 'Level',
                 'attributes' => [
                     'name' => $data['name'],
-                    'url' => 'images/levels/smiley-repair.png',
+                    'url' => $repairImage,
                     'width' => $width,
                     'height' => $height,
                 ],
