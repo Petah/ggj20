@@ -2,65 +2,103 @@ const tmpl = require('./canvas.tmpl.html');
 
 const MOUSE_BUTTON_1 = 0b01;
 
-const CanvasController = function ($element, $scope, $rootScope) {
+const CanvasController = function (
+    $element,
+    $scope,
+    $rootScope,
+    $timeout,
+    $http,
+) {
     const $ctrl = this;
 
     $ctrl.canvas = null;
     $ctrl.content = null;
     $ctrl.drawing = false;
 
-    // Drawing functions
-    const startStroke = point => {
-        $ctrl.drawing = true;
-        $rootScope.$broadcast('brushStartStroke', point);
-    };
+    $ctrl.color = null;
+    $ctrl.lastPoint = null;
 
-    const continueStroke = point => {
-        $rootScope.$broadcast(
-            'brushContinueStroke',
-            $ctrl.canvas,
-            $ctrl.context,
-            point,
-        );
-    };
 
-    const endStroke = event => {
-        if (!$ctrl.drawing) {
-            return;
-        }
-
+    const endStroke = (event) => {
+        console.log('Canvas end stroke');
         $ctrl.drawing = false;
-        event.currentTarget.removeEventListener('mousemove', mouseMove, false);
-        $rootScope.$broadcast('brushEndStroke', event);
     };
 
-    // Event helpers
     const mouseButtonIsDown = buttons => {
         return (MOUSE_BUTTON_1 & buttons) === MOUSE_BUTTON_1;
     };
 
-    const mouseMove = evt => {
+    let compareDebounce = null;
+
+    const mouseMove = (event) => {
+        // console.log('Canvas mouse move');
         if (!$ctrl.drawing) {
             return;
         }
-        continueStroke([evt.offsetX, evt.offsetY]);
-    };
 
-    const mouseDown = evt => {
-        if ($ctrl.drawing) {
-            return;
+        const point = [event.offsetX, event.offsetY];
+        if (!$ctrl.lastPoint) {
+            $ctrl.lastPoint = point;
         }
 
-        evt.preventDefault();
-        $ctrl.canvas.addEventListener('mousemove', mouseMove, false);
-        startStroke([evt.offsetX, evt.offsetY]);
+        if ($ctrl.color) {
+            $ctrl.context.beginPath();
+            $ctrl.context.moveTo($ctrl.lastPoint[0], $ctrl.lastPoint[1]);
+            $ctrl.context.strokeStyle = $ctrl.color.hex;
+            $ctrl.context.lineWidth = 25;
+            $ctrl.context.lineCap = 'round';
+            $ctrl.context.lineJoin = 'round';
+            $ctrl.context.lineTo(point[0], point[1]);
+            $ctrl.context.stroke();
+
+            if (!compareDebounce) {
+                compareDebounce = $timeout(() => {
+                    compareDebounce = null;
+                    // console.log($ctrl.canvas.toDataURL());
+                    console.log('compare');
+
+                    $http
+                        .post('/api/compare', {
+                            data: {
+                                attributes: {
+                                    image: $ctrl.canvas.toDataURL(),
+                                },
+                                relationships: {
+                                    level: {
+                                        data: {
+                                            id: $ctrl.level.id,
+                                            type: $ctrl.level.type,
+                                        },
+                                    },
+                                },
+                            },
+                        })
+                        .then(response => {
+                            $rootScope.$broadcast('comparison', response.data.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }, 100);
+            }
+        }
+
+        $ctrl.lastPoint = point;
     };
 
-    const mouseEnter = evt => {
-        if (!mouseButtonIsDown(evt.buttons) || $ctrl.drawing) {
+    const mouseDown = (event) => {
+        console.log('Canvas mouse down');
+        $ctrl.drawing = true;
+        $ctrl.lastPoint = [event.offsetX, event.offsetY];
+        mouseMove(event);
+    };
+
+    const mouseEnter = (event) => {
+        console.log('Canvas mouse enter');
+        if (!mouseButtonIsDown(event.buttons) || $ctrl.drawing) {
             return;
         }
-        mouseDown(evt);
+        mouseDown(event);
     };
 
     // Init helpers
@@ -77,22 +115,8 @@ const CanvasController = function ($element, $scope, $rootScope) {
         $ctrl.canvas.addEventListener('mouseup', endStroke, false);
         $ctrl.canvas.addEventListener('mouseout', endStroke, false);
         $ctrl.canvas.addEventListener('mouseenter', mouseEnter, false);
+        $ctrl.canvas.addEventListener('mousemove', mouseMove, false);
     };
-
-    // $http
-    //     .post('/api/compare', {
-    //         data: {
-    //             attributes: {
-    //                 image: context.toDataUri(),
-    //             }
-    //         }
-    //     })
-    //     .then(response => {
-    //         $ctrl.levels = response.data.data;
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    //     });
 
     $ctrl.$onInit = () => {
         $ctrl.height = $ctrl.height || 800;
@@ -102,7 +126,8 @@ const CanvasController = function ($element, $scope, $rootScope) {
     };
 
     $scope.$on('selectLevel', (event, level) => {
-        console.log('Drawing level on canvas', level.attributes);
+        console.log('Drawing level on canvas', level);
+        $ctrl.level = level;
         $ctrl.width = level.attributes.width;
         $ctrl.height = level.attributes.height;
 
@@ -115,12 +140,22 @@ const CanvasController = function ($element, $scope, $rootScope) {
         };
         image.src = level.attributes.url;
     });
+
+    $scope.$on('debuff', (event, debuff) => {
+        console.log('Canvas debuff', debuff);
+    });
+
+    $scope.$on('changeColor', (event, color) => {
+        $ctrl.color = color;
+    });
 };
 
 CanvasController.$inject = [
     '$element',
     '$scope',
     '$rootScope',
+    '$timeout',
+    '$http',
 ];
 
 const Canvas = {

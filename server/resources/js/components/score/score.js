@@ -37,6 +37,12 @@ const ScoreController = function (
             }
         }, 25);
     });
+
+    $scope.$on('comparison', (event, comparison) => {
+        console.log('Comparison', comparison);
+        $ctrl.score = ((comparison.attributes.score - 50) * 1000).toFixed();
+    });
+
 };
 
 ScoreController.$inject = [

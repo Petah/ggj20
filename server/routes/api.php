@@ -20,4 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('level/list', [LevelController::class, 'index']);
-Route::get('compare', [CompareController::class, 'compare']);
+Route::post('compare', [CompareController::class, 'compare']);

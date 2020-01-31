@@ -2,7 +2,7 @@
 	<h1>Repainter</h1>
     <g-level-select></g-level-select>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col">
             <g-canvas
                 g-brush="$ctrl.brush"
                 g-on-start-stroke="$ctrl.onBrushStartStroke(point)"
@@ -11,7 +11,7 @@
                 ng-show="$ctrl.level"
             ></g-canvas>
         </div>
-        <div class="col-md-6">
+        <div class="col">
             <g-score
                 ng-show="$ctrl.level"
             ></g-score>

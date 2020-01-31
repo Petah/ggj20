@@ -8,6 +8,7 @@ class LevelController extends Controller
 {
     const IMAGES = [
         'smiley' => [
+            'image' => 'smiley',
             'name' => 'Smiley Face',
             'timeLimit' => 60,
             'debuffs' => [
@@ -33,6 +34,7 @@ class LevelController extends Controller
             ],
         ],
         'unicorn' => [
+            'image' => 'unicorn',
             'name' => 'Unicorn',
             'timeLimit' => 180,
             'debuffs' => [
@@ -85,11 +87,11 @@ class LevelController extends Controller
     public function index()
     {
         $levels = [];
-        foreach (static::IMAGES as $image => $data) {
-            $repairImage = 'images/levels/' . $image . '-repair.png';
+        foreach (static::IMAGES as $id => $data) {
+            $repairImage = 'images/levels/' . $data['image'] . '-repair.png';
             [$width, $height] = getimagesize(public_path($repairImage));
             $levels[] = [
-                'id' => uniqid('uid-'),
+                'id' => $id,
                 'type' => 'Level',
                 'attributes' => array_merge($data, [
                     'url' => $repairImage,
