@@ -6,6 +6,7 @@ import Palette from "./components/palette/palette";
 
 import RootController from "./controllers/root";
 import LevelSelect from "./components/level-select/level-select";
+import Score from "./components/score/score";
 
 try {
     // Init Angular App
@@ -15,6 +16,7 @@ try {
         .component("gCanvas", Canvas)
         .component("gPalette", Palette)
         .component("gLevelSelect", LevelSelect)
+        .component("gScore", Score)
         .controller("gRootController", RootController);
 
     app.config([
