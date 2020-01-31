@@ -14,7 +14,7 @@ class CompareController extends Controller
         $imageBinary = base64_decode($imageBase64);
         $image = imagecreatefromstring($imageBinary);
         $level = LevelController::IMAGES[$request->input('data.relationships.level.data.id')];
-        $score = $this->getScore($image, public_path('images/levels/' . $level['image'] . '-repair.jpg'), public_path('images/levels/' . $level['image'] . '-actual.jpg'));
+        $score = $this->getScore($image, public_path('images/levels/' . $level['image'] . '-repair.png'), public_path('images/levels/' . $level['image'] . '-actual.png'));
         return [
             'data' => [
                 'type' => 'Comparison',
