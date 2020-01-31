@@ -1,23 +1,24 @@
 <?php
 
 // compare two images and return score (100 means completelt the same)
-//
-// error code
-// -101: userImage is not found
-// -102: actualImage is not found
-// -201: image size is not the same (width)
-// -202: image size is not the same (height)
-// -203: user image width is 0 or less
-// -204: user image height is 0 or less
-// -205: actual image width is 0 or less
-// -206: actual image height is 0 or less
-function getScore($userImageName, $actualImageName) {
+// $repairImage: a broken image to be repaired
+// $userImageName: a broken image AFTER the user draws something
+// $actualImageName: the original image
+function getScore($repairImageName, $userImageName, $actualImageName) {
 
-	$blurSize = 0; // looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
+	//-------------------------------------------------------------------------
+	// configuration
+	$blurSize = 2; 			// 2: looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
+	$resizePercent = 0.25; 	// 0.5: 50.0
+	//-------------------------------------------------------------------------
 
+	$repairImage = imagecreatefrompng($repairImageName);
 	$userImage = imagecreatefrompng($userImageName);
 	$actualImage = imagecreatefrompng($actualImageName);
 
+	if ($repairImage == null) {
+		throw new \Exception('repairImage is not found');
+	}
 	if ($userImage == null) {
 		throw new \Exception('userImage is not found');
 	}
@@ -25,40 +26,84 @@ function getScore($userImageName, $actualImageName) {
 		throw new \Exception('actualImage is not found');
 	}
 
+	[$repairImageWidth, $repairImageHeight] = getimagesize($repairImageName);
 	[$userImageWidth, $userImageHeight] = getimagesize($userImageName);
-    $userImageResized = imagecreatetruecolor(100, 100);
-    imagecopyresampled($userImageResized, $userImage, 0, 0, 0, 0, 100, 100, $userImageWidth, $userImageHeight);
 	[$actualImageWidth, $actualImageHeight] = getimagesize($actualImageName);
 
-	var_dump("userImageWidth: $userImageWidth");
-	var_dump("actualImageWidth: $actualImageWidth");
-	var_dump("userImageHeight: $userImageHeight");
-	var_dump("actualImageHeight: $actualImageHeight");
+	// var_dump("repairImage: width: $repairImageWidth, height: $repairImageHeight");
+	// var_dump("userImage: width: $userImageWidth, height: $userImageHeight");
+	// var_dump("actualImage: width: $actualImageWidth, height: $actualImageHeight");
 
-	if ($userImageWidth != $actualImageWidth) {
-		return -201;
+
+   
+	if ($repairImageWidth != $actualImageWidth || $repairImageHeight != $actualImageHeight) {
+		throw new \Exception('image size is not the same between repairImage and actualImage');
 	}
-	if ($userImageHeight != $actualImageHeight) {
-		return -202;
+	if ($userImageWidth != $actualImageWidth || $userImageHeight != $actualImageHeight) {
+		throw new \Exception('image size is not the same between userImage and actualImage');
+	}
+	if ($repairImageWidth <= 0) {
+		throw new \Exception('repair image width is 0 or less');
+	}
+	if ($repairImageHeight <= 0) {
+		throw new \Exception('repair image height is 0 or less');
 	}
 	if ($userImageWidth <= 0) {
-		return -203;
+		throw new \Exception('user image width is 0 or less');
 	}
 	if ($userImageHeight <= 0) {
-		return -204;
+		throw new \Exception('user image height is 0 or less');
 	}
 	if ($actualImageWidth <= 0) {
-		return -205;
+		throw new \Exception('actual image width is 0 or less');
 	}
 	if ($actualImageHeight <= 0) {
-		return -206;
+		throw new \Exception('actual image height is 0 or less');
 	}
+
+
+	$resizedWidth = $actualImageWidth * $resizePercent;
+	$resizedHeight = $actualImageHeight * $resizePercent;
+
+	// var_dump("-----------------------------------");
+	// var_dump("RESIZED SIZE: width: $resizedWidth, height: $resizedHeight");
+
+
+	$resizedRepairImage = ImageCreateTrueColor($resizedWidth, $resizedHeight);
+	ImageColorTransparent($resizedRepairImage, ImageColorAllocate($resizedRepairImage, 0, 0, 0));
+	ImageAlphaBlending($resizedRepairImage, false);
+	ImageCopyResampled($resizedRepairImage, $repairImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($repairImage), ImageSY($repairImage));
+
+	$resizedUserImage = ImageCreateTrueColor($resizedWidth, $resizedHeight);
+	ImageColorTransparent($resizedUserImage, ImageColorAllocate($resizedUserImage, 0, 0, 0));
+	ImageAlphaBlending($resizedUserImage, false);
+	ImageCopyResampled($resizedUserImage, $userImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($userImage), ImageSY($userImage));
+
+	$resizedActualImage = ImageCreateTrueColor($resizedWidth, $resizedHeight);
+	ImageColorTransparent($resizedActualImage, ImageColorAllocate($resizedActualImage, 0, 0, 0));
+	ImageAlphaBlending($resizedActualImage, false);
+	ImageCopyResampled($resizedActualImage, $actualImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($actualImage), ImageSY($actualImage));
+
+	$repairImageWidth = imagesx($resizedRepairImage);
+	$repairImageHeight = imagesy($resizedRepairImage);
+	$userImageWidth = imagesx($resizedUserImage);
+	$userImageHeight = imagesy($resizedUserImage);
+	$actualImageWidth = imagesx($resizedActualImage);
+	$actualImageHeight = imagesy($resizedActualImage);
+
+	// var_dump("-----------------------------------");
+	// var_dump("repairImage: width: $repairImageWidth, height: $repairImageHeight");
+	// var_dump("userImage: width: $userImageWidth, height: $userImageHeight");
+	// var_dump("actualImage: width: $actualImageWidth, height: $actualImageHeight");
+
 	$numberOfPixels = $userImageWidth * $userImageHeight;
+	// var_dump("numberOfPixels: $numberOfPixels");
 
-	$score = 0.0;
+	$repairScore = 0.0;
+	$userScore = 0.0;
 
-	for ($y = 0; $y < $userImageHeight; $y++) {
-		for ($x = 0; $x < $userImageWidth; $x++) {
+	for ($y = 0; $y < $actualImageHeight; $y++) {
+		for ($x = 0; $x < $actualImageWidth; $x++) {
 
 			// calciulate range for blur
 			$minimumX = $x - $blurSize;
@@ -79,13 +124,33 @@ function getScore($userImageName, $actualImageName) {
 			}
 			$numberOfBlurPixels = ($maximumX - $minimumX + 1) * ($maximumY - $minimumY + 1);
 
+			// get color from repairImage
+			$repairRed = 0.0;
+			$repairGreen = 0.0;
+			$repairBlue = 0.0;
+			for ($repairY = $minimumY; $repairY <= $maximumY; $repairY++) {
+				for ($repairX = $minimumX; $repairX <= $maximumX; $repairX++) {				
+					$color = imagecolorat($resizedRepairImage, $repairX, $repairY);
+					$red = ($color >> 16) & 0xFF;
+					$green = ($color >> 8) & 0xFF;
+					$blue = $color & 0xFF;
+
+					$repairRed += $red;
+					$repairGreen += $green;
+					$repairBlue += $blue;
+				}
+			}
+			$repairRed /= $numberOfBlurPixels;
+			$repairGreen /= $numberOfBlurPixels;
+			$repairBlue /= $numberOfBlurPixels;
+
 			// get color from userImage
 			$userRed = 0.0;
 			$userGreen = 0.0;
 			$userBlue = 0.0;
-			for ($userX = $minimumX; $userX <= $maximumX; $userX++) {
-				for ($userY = $minimumY; $userY <= $maximumY; $userY++) {
-					$color = imagecolorat($userImage, $userX, $userY);
+			for ($userY = $minimumY; $userY <= $maximumY; $userY++) {
+				for ($userX = $minimumX; $userX <= $maximumX; $userX++) {				
+					$color = imagecolorat($resizedUserImage, $userX, $userY);
 					$red = ($color >> 16) & 0xFF;
 					$green = ($color >> 8) & 0xFF;
 					$blue = $color & 0xFF;
@@ -105,7 +170,7 @@ function getScore($userImageName, $actualImageName) {
 			$actualBlue = 0.0;
 			for ($actualX = $minimumX; $actualX <= $maximumX; $actualX++) {
 				for ($actualY = $minimumY; $actualY <= $maximumY; $actualY++) {
-					$color = imagecolorat($actualImage, $actualX, $actualY);
+					$color = imagecolorat($resizedActualImage, $actualX, $actualY);
 					$red = ($color >> 16) & 0xFF;
 					$green = ($color >> 8) & 0xFF;
 					$blue = $color & 0xFF;
@@ -120,33 +185,75 @@ function getScore($userImageName, $actualImageName) {
 			$actualBlue /= $numberOfBlurPixels;
 
 
-			// calculate score
-			echo $x . ' ' . $y . ' ' . $userRed  . ' ' .  $actualRed . PHP_EOL;
-			$diffRed = $userRed - $actualRed;
-			$diffGreen = $userGreen - $actualGreen;
-			$diffBlue = $userBlue - $actualBlue;
-			if ($diffRed < 0) {
-				$diffRed *= -1;
+			// calculate repairScore
+			$repairDiffRed = $repairRed - $actualRed;
+			$repairDiffGreen = $repairGreen - $actualGreen;
+			$repairDiffBlue = $repairBlue - $actualBlue;
+			if ($repairDiffRed < 0) {
+				$repairDiffRed *= -1;
 			}
-			if ($diffGreen < 0) {
-				$diffGreen *= -1;
+			if ($repairDiffGreen < 0) {
+				$repairDiffGreen *= -1;
 			}
-			if ($diffBlue < 0) {
-				$diffBlue *= -1;
+			if ($repairDiffBlue < 0) {
+				$repairDiffBlue *= -1;
 			}
-			$diffRed = 100.0 - $diffRed * 100.0 / 255.0;
-			$diffGreen = 100.0 - $diffGreen * 100.0 / 255.0;
-			$diffBlue = 100.0 - $diffBlue * 100.0 / 255.0;
+			$repairDiffRed = $repairDiffRed * 100.0 / 255.0;
+			$repairDiffGreen = $repairDiffGreen * 100.0 / 255.0;
+			$repairDiffBlue = $repairDiffBlue * 100.0 / 255.0;
 
-			$score += $diffRed / 3.0 / $numberOfPixels;
-			$score += $diffGreen / 3.0 / $numberOfPixels;
-			$score += $diffBlue / 3.0 / $numberOfPixels;
+			$repairScoreRed = 100.0 - $repairDiffRed;
+			$repairScoreGreen = 100.0 - $repairDiffGreen;
+			$repairScoreBlue = 100.0 - $repairDiffBlue;
+
+			$repairScore += $repairScoreRed / 3.0 / $numberOfPixels;
+			$repairScore += $repairScoreGreen / 3.0 / $numberOfPixels;
+			$repairScore += $repairScoreBlue / 3.0 / $numberOfPixels;
+
+
+			// calculate userScore
+			$userDiffRed = $userRed - $actualRed;
+			$userDiffGreen = $userGreen - $actualGreen;
+			$userDiffBlue = $userBlue - $actualBlue;
+			if ($userDiffRed < 0) {
+				$userDiffRed *= -1;
+			}
+			if ($userDiffGreen < 0) {
+				$userDiffGreen *= -1;
+			}
+			if ($userDiffBlue < 0) {
+				$userDiffBlue *= -1;
+			}
+			$userDiffRed = $userDiffRed * 100.0 / 255.0;
+			$userDiffGreen = $userDiffGreen * 100.0 / 255.0;
+			$userDiffBlue = $userDiffBlue * 100.0 / 255.0;
+
+			$userScoreRed = 100.0 - $userDiffRed;
+			$userScoreGreen = 100.0 - $userDiffGreen;
+			$userScoreBlue = 100.0 - $userDiffBlue;
+
+			$userScore += $userScoreRed / 3.0 / $numberOfPixels;
+			$userScore += $userScoreGreen / 3.0 / $numberOfPixels;
+			$userScore += $userScoreBlue / 3.0 / $numberOfPixels;
 		}
 	}
+	var_dump("repairScore: $repairScore, userScore: $userScore");
+
+	if ($repairScore == 0.0 && $userScore == 0.0) {
+		return 0.0;
+	}
+	if ($repairScore >= $userScore) {
+		return 50.0 - ($repairScore - $userScore) / $repairScore * 50.0;
+	} else {
+		return ($userScore - $repairScore) / (100.0 - $repairScore) * 50.0 + 50.0;
+	}
+
 	return $score;
 }
 
 var_dump("### start");
-$result = getScore(__DIR__ . '/public/images/levels/smiley-repair.png', __DIR__ . '/public/images/levels/smiley-actual.png');
-$result = getScore(__DIR__ . '/public/images/levels/smiley-user.png', __DIR__ . '/public/images/levels/smiley-actual.png');
+$result = getScore(
+	__DIR__ . '/public/images/levels/smiley-repair.png',
+	__DIR__ . '/public/images/levels/smiley-user.png', 
+	__DIR__ . '/public/images/levels/smiley-actual.png');
 var_dump("### score: $result");
