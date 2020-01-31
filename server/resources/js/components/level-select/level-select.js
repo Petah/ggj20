@@ -14,11 +14,17 @@ const LevelSelectController = function($http, $rootScope) {
 
     $ctrl.selectLevel = level => {
         console.log('Select level', level);
+        $('.modal').modal('hide');
         $rootScope.$broadcast('selectLevel', level);
     };
+
+    $('.modal').modal('show');
 };
 
-LevelSelectController.$inject = ['$http', '$rootScope'];
+LevelSelectController.$inject = [
+    '$http',
+    '$rootScope',
+];
 
 const LevelSelect = {
     template: tmpl,

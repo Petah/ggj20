@@ -1,9 +1,28 @@
 <div class="g-level-select">
-    <h1>LEVEL SELECT</h1>
-    <div class="row">
-        <div ng-repeat="level in $ctrl.levels" class="col g-level-select-level" ng-click="$ctrl.selectLevel(level)">
-            <div>{{ level.attributes.name }}</div>
-            <img ng-src="{{ level.attributes.url }}" />
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Welcome to Repainter</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Your task is to repair damaged clip art and paintings. You your paint palette to select the
+                        colors and repaint the damaged areas of the image.
+                    </p>
+
+                    <h2>Select your level</h2>
+                    <div class="row">
+                        <div ng-repeat="level in $ctrl.levels" class="col g-level-select-level" ng-click="$ctrl.selectLevel(level)">
+                            <div>{{ level.attributes.name }}</div>
+                            <img ng-src="{{ level.attributes.url }}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

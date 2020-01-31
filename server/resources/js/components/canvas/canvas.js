@@ -2,6 +2,9 @@ const tmpl = require('./canvas.tmpl.html');
 
 const MOUSE_BUTTON_1 = 0b01;
 
+// 740
+// 740
+
 const CanvasController = function (
     $element,
     $scope,
@@ -138,8 +141,8 @@ const CanvasController = function (
     };
 
     $ctrl.$onInit = () => {
-        $ctrl.height = $ctrl.height || 800;
-        $ctrl.width = $ctrl.width || 540;
+        $ctrl.height = 740;
+        $ctrl.width = 740;
 
         initCanvas();
     };
@@ -147,14 +150,14 @@ const CanvasController = function (
     $scope.$on('selectLevel', (event, level) => {
         console.log('Drawing level on canvas', level);
         $ctrl.level = level;
-        $ctrl.width = level.attributes.width;
-        $ctrl.height = level.attributes.height;
+        // $ctrl.width = level.attributes.width;
+        // $ctrl.height = level.attributes.height;
 
         $ctrl.context.clearRect(0, 0, $ctrl.canvas.width, $ctrl.canvas.height);
 
         const image = new Image();
         image.onload = () => {
-            $ctrl.context.drawImage(image, 0, 0);
+            $ctrl.context.drawImage(image, 0, 0, $ctrl.width, $ctrl.height);
             console.log('Canvas ready');
         };
         image.src = level.attributes.url;

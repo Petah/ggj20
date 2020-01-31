@@ -1,7 +1,10 @@
-<div class="g-palette">
-    <canvas
-        id="g-canvas__canvas"
-        ng-attr-width="{{ $ctrl.width }}"
-        ng-attr-height="{{ $ctrl.height }}"
-    ></canvas>
+<div class="g-canvas">
+    <div class="g-canvas-background">
+        <canvas
+            id="g-canvas__canvas"
+            ng-attr-width="{{ $ctrl.width }}"
+            ng-attr-height="{{ $ctrl.height }}"
+        ></canvas>
+        <div class="g-canvas-overlay"></div>
+    </div>
 </div>

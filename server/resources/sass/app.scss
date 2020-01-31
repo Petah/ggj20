@@ -29,6 +29,29 @@ body {
 }
 
 .g-canvas {
+    .g-canvas-background {
+        background-image: url(/images/easel.png);
+        width: 909px;
+        min-height: 1035px;
+        position: relative;
+    }
+
+    .g-canvas-overlay {
+        pointer-events: none;
+        background-image: url(/images/easel.png);
+        width: 909px;
+        min-height: 1035px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+    }
+
+    canvas {
+        margin-top: 116px;
+        margin-left: 83px;
+    }
 }
 
 .g-palette {
@@ -44,5 +67,7 @@ body {
 
     .g-level-select-level {
         cursor: pointer;
+        text-align: center;
+        border: 1px solid #aaa;
     }
 }
