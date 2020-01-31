@@ -38,7 +38,8 @@ class CompareController extends Controller
         //-------------------------------------------------------------------------
         // configuration
         $blurSize = 0; 			// 2: looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
-        $resizePercent = 0.1; 	// 0.5: 50.0
+        $resizedWidth = 100;
+        $resizedHeight = 100;
         //-------------------------------------------------------------------------
 
         $repairImage = imagecreatefromstring(file_get_contents($repairImageName));
@@ -62,14 +63,6 @@ class CompareController extends Controller
         // var_dump("userImage: width: $userImageWidth, height: $userImageHeight");
         // var_dump("actualImage: width: $actualImageWidth, height: $actualImageHeight");
 
-
-
-        if ($repairImageWidth != $actualImageWidth || $repairImageHeight != $actualImageHeight) {
-            throw new Exception('image size is not the same between repairImage and actualImage');
-        }
-        if ($userImageWidth != $actualImageWidth || $userImageHeight != $actualImageHeight) {
-            throw new Exception('image size is not the same between userImage and actualImage');
-        }
         if ($repairImageWidth <= 0) {
             throw new Exception('repair image width is 0 or less');
         }
@@ -89,25 +82,21 @@ class CompareController extends Controller
             throw new Exception('actual image height is 0 or less');
         }
 
-
-        $resizedWidth = $actualImageWidth * $resizePercent;
-        $resizedHeight = $actualImageHeight * $resizePercent;
-
         // var_dump("-----------------------------------");
         // var_dump("RESIZED SIZE: width: $resizedWidth, height: $resizedHeight");
 
-        $resizedRepairImage = ImageCreateTrueColor($resizedWidth, $resizedHeight);
-        ImageColorTransparent($resizedRepairImage, ImageColorAllocate($resizedRepairImage, 0, 0, 0));
+        $resizedRepairImage = imagecreatetruecolor($resizedWidth, $resizedHeight);
+        ImageColorTransparent($resizedRepairImage, imagecolorallocate($resizedRepairImage, 0, 0, 0));
         ImageAlphaBlending($resizedRepairImage, false);
         ImageCopyResampled($resizedRepairImage, $repairImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($repairImage), ImageSY($repairImage));
 
-        $resizedUserImage = ImageCreateTrueColor($resizedWidth, $resizedHeight);
-        ImageColorTransparent($resizedUserImage, ImageColorAllocate($resizedUserImage, 0, 0, 0));
+        $resizedUserImage = imagecreatetruecolor($resizedWidth, $resizedHeight);
+        ImageColorTransparent($resizedUserImage, imagecolorallocate($resizedUserImage, 0, 0, 0));
         ImageAlphaBlending($resizedUserImage, false);
         ImageCopyResampled($resizedUserImage, $userImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($userImage), ImageSY($userImage));
 
-        $resizedActualImage = ImageCreateTrueColor($resizedWidth, $resizedHeight);
-        ImageColorTransparent($resizedActualImage, ImageColorAllocate($resizedActualImage, 0, 0, 0));
+        $resizedActualImage = imagecreatetruecolor($resizedWidth, $resizedHeight);
+        ImageColorTransparent($resizedActualImage, imagecolorallocate($resizedActualImage, 0, 0, 0));
         ImageAlphaBlending($resizedActualImage, false);
         ImageCopyResampled($resizedActualImage, $actualImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($actualImage), ImageSY($actualImage));
 
