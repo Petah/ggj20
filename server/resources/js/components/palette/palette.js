@@ -6,11 +6,9 @@ const PaletteController = function (
     $rootScope,
 ) {
     const $ctrl = this;
-
     $ctrl.colors = colors;
 
     $ctrl.changeColor = (color) => {
-        console.log('Change color', color);
         $rootScope.$broadcast('changeColor', color);
     };
 

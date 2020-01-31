@@ -5,6 +5,7 @@ const MOUSE_BUTTON_1 = 0b01;
 const CanvasController = function (
     $element,
     $scope,
+    $rootScope,
 ) {
     const $ctrl = this;
 
@@ -15,20 +16,11 @@ const CanvasController = function (
     // Drawing functions
     const startStroke = point => {
         $ctrl.drawing = true;
-
-        if ($ctrl.onStartStroke) {
-            $ctrl.onStartStroke({ point: point });
-        }
+        $rootScope.$broadcast('brushStartStroke', point);
     };
 
     const continueStroke = point => {
-        if ($ctrl.onContinueStroke) {
-            $ctrl.onContinueStroke({
-                canvas: $ctrl.canvas,
-                context: $ctrl.context,
-                point: point,
-            });
-        }
+        $rootScope.$broadcast('brushContinueStroke', $ctrl.canvas, $ctrl.context, point);
     };
 
     const endStroke = event => {
@@ -38,10 +30,7 @@ const CanvasController = function (
 
         $ctrl.drawing = false;
         event.currentTarget.removeEventListener("mousemove", mouseMove, false);
-    
-        if ($ctrl.onEndStroke) {
-            $ctrl.onEndStroke({ event: event });
-        }
+        $rootScope.$broadcast('brushEndStroke', event);
     };
 
     // Event helpers
@@ -96,10 +85,6 @@ const CanvasController = function (
         initCanvas();
     };
 
-    $scope.$on('changeColor', (event, color) => {
-        console.log(color);
-    });
-
     $scope.$on('selectLevel', (event, level) => {
         console.log('Drawing level on canvas', level.attributes);
         $ctrl.width = level.attributes.width;
@@ -115,6 +100,7 @@ const CanvasController = function (
 CanvasController.$inject = [
     "$element",
     "$scope",
+    "$rootScope",
 ];
 
 const Canvas = {
@@ -122,9 +108,6 @@ const Canvas = {
     controller: CanvasController,
     bindings: {
         brush: "<?gBrush",
-        onStartStroke: "&?gOnStartStroke",
-        onContinueStroke: "&?gOnContinueStroke",
-        onEndStroke: "&?gOnEndStroke",
         height: "<?gHeight",
         width: "<?gWidth",
     },

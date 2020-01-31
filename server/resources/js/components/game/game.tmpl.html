@@ -1,13 +1,6 @@
 <div class="g-game">
 	<h1>Repainter</h1>
     <g-level-select></g-level-select>
-    <g-canvas
-        g-brush="$ctrl.brush"
-        g-on-start-stroke="$ctrl.onBrushStartStroke(point)"
-        g-on-continue-stroke="$ctrl.onBrushContinueStroke(canvas, context, point)"
-        g-on-end-stroke="$ctrl.onBrushEndStroke(event)"
-    ></g-canvas>
-    <g-palette
-        g-on-color-change="$ctrl.onPaletteColorChange(color)"
-    ></g-palette>
+    <g-canvas></g-canvas>
+    <g-palette></g-palette>
 </div>
