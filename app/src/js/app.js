@@ -1,6 +1,8 @@
 import "./bootstrap";
 
+import Canvas from "./components/canvas/canvas";
 import Game from "./components/game/game";
+import Palette from "./components/palette/palette";
 
 import RootController from "./controllers/root";
 
@@ -9,6 +11,8 @@ try {
     const app = angular
         .module("GGJ2020", [])
         .component("gGame", Game)
+        .component("gCanvas", Canvas)
+        .component("gPalette", Palette)
         .controller("gRootController", RootController);
 
     app.config([
