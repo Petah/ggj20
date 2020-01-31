@@ -88,7 +88,7 @@ class LevelController extends Controller
     {
         $levels = [];
         foreach (static::IMAGES as $id => $data) {
-            $repairImage = 'images/levels/' . $data['image'] . '-repair.png';
+            $repairImage = 'images/levels/' . $data['image'] . '-repair.jpg';
             [$width, $height] = getimagesize(public_path($repairImage));
             $levels[] = [
                 'id' => $id,

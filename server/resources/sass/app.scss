@@ -21,6 +21,11 @@ body {
     font-weight: 200;
     margin: 0;
     padding: 0;
+
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    position: fixed;
 }
 
 .g-canvas {

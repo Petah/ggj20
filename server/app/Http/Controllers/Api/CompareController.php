@@ -14,7 +14,7 @@ class CompareController extends Controller
         $imageBinary = base64_decode($imageBase64);
         $image = imagecreatefromstring($imageBinary);
         $level = LevelController::IMAGES[$request->input('data.relationships.level.data.id')];
-        $score = $this->getScore($image, public_path('images/levels/' . $level['image'] . '-repair.png'), public_path('images/levels/' . $level['image'] . '-actual.png'));
+        $score = $this->getScore($image, public_path('images/levels/' . $level['image'] . '-repair.jpg'), public_path('images/levels/' . $level['image'] . '-actual.jpg'));
         return [
             'data' => [
                 'type' => 'Comparison',
@@ -41,8 +41,8 @@ class CompareController extends Controller
         $resizePercent = 0.1; 	// 0.5: 50.0
         //-------------------------------------------------------------------------
 
-        $repairImage = imagecreatefrompng($repairImageName);
-        $actualImage = imagecreatefrompng($actualImageName);
+        $repairImage = imagecreatefromstring(file_get_contents($repairImageName));
+        $actualImage = imagecreatefromstring(file_get_contents($actualImageName));
 
         if ($repairImage == null) {
             throw new Exception('repairImage is not found');

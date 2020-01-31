@@ -30,13 +30,29 @@ const CanvasController = function (
 
     let compareDebounce = null;
 
+    const getEventPosition = (event) => {
+        let x;
+        let y;
+        if (event.targetTouches && event.targetTouches.length) {
+            const rect = event.target.getBoundingClientRect();
+            x = event.targetTouches[0].pageX - rect.left;
+            y = event.targetTouches[0].pageY - rect.top;
+        } else {
+            x = event.offsetX;
+            y = event.offsetY;
+        }
+        return [x, y];
+    }
+
     const mouseMove = (event) => {
-        // console.log('Canvas mouse move');
+        console.log('Canvas mouse move', $ctrl.drawing, event);
         if (!$ctrl.drawing) {
             return;
         }
 
-        const point = [event.offsetX, event.offsetY];
+
+        const point = getEventPosition(event);
+        console.log('Point', point, $ctrl.lastPoint)
         if (!$ctrl.lastPoint) {
             $ctrl.lastPoint = point;
         }
@@ -89,7 +105,7 @@ const CanvasController = function (
     const mouseDown = (event) => {
         console.log('Canvas mouse down');
         $ctrl.drawing = true;
-        $ctrl.lastPoint = [event.offsetX, event.offsetY];
+        $ctrl.lastPoint = getEventPosition(event);
         mouseMove(event);
     };
 
@@ -112,10 +128,13 @@ const CanvasController = function (
 
         // Register event handlers
         $ctrl.canvas.addEventListener('mousedown', mouseDown, false);
+        $ctrl.canvas.addEventListener('touchstart', mouseDown, false);
         $ctrl.canvas.addEventListener('mouseup', endStroke, false);
+        $ctrl.canvas.addEventListener('touchend', endStroke, false);
         $ctrl.canvas.addEventListener('mouseout', endStroke, false);
         $ctrl.canvas.addEventListener('mouseenter', mouseEnter, false);
         $ctrl.canvas.addEventListener('mousemove', mouseMove, false);
+        $ctrl.canvas.addEventListener('touchmove', mouseMove, false);
     };
 
     $ctrl.$onInit = () => {
