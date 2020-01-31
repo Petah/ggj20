@@ -1,14 +1,11 @@
-const tmpl = require("./palette.tmpl.html");
-import colors from "../../common/colors";
+const tmpl = require('./palette.tmpl.html');
+import colors from '../../common/colors';
 
-const PaletteController = function (
-    $scope,
-    $rootScope,
-) {
+const PaletteController = function($scope, $rootScope) {
     const $ctrl = this;
     $ctrl.colors = colors;
 
-    $ctrl.changeColor = (color) => {
+    $ctrl.changeColor = color => {
         $rootScope.$broadcast('changeColor', color);
     };
 
@@ -17,16 +14,13 @@ const PaletteController = function (
     });
 };
 
-PaletteController.$inject = [
-    '$scope',
-    '$rootScope',
-];
+PaletteController.$inject = ['$scope', '$rootScope'];
 
 const Palette = {
     template: tmpl,
     controller: PaletteController,
     bindings: {
-        onColorChange: "&?onColorChange",
+        onColorChange: '&?onColorChange',
     },
 };
 

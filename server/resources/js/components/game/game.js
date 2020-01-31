@@ -1,6 +1,6 @@
-import tmpl from "./game.tmpl.html";
-import PaintBrush from "../../common/brushes/paint_brush";
-import colors from "../../common/colors";
+import tmpl from './game.tmpl.html';
+import PaintBrush from '../../common/brushes/paint_brush';
+import colors from '../../common/colors';
 
 const GameController = function($scope) {
     const $ctrl = this;
@@ -11,20 +11,26 @@ const GameController = function($scope) {
         strokeWidth: 25,
         selected: new PaintBrush(),
     };
-    
+
     $scope.$on('brushEndStroke', (event, point) => {
         $ctrl.brush.latestPoint = point;
     });
 
     $scope.$on('brushContinueStroke', (event, canvas, context, point) => {
-        $ctrl.brush.selected.handler(canvas, context, $ctrl.brush.latestPoint, point, $ctrl.brush.color);
+        $ctrl.brush.selected.handler(
+            canvas,
+            context,
+            $ctrl.brush.latestPoint,
+            point,
+            $ctrl.brush.color,
+        );
         $ctrl.brush.latestPoint = point;
     });
-    
-    $scope.$on('brushEndStroke', (event) => {
+
+    $scope.$on('brushEndStroke', event => {
         console.log('Stroke ended', event);
     });
-    
+
     $scope.$on('changeColor', (event, color) => {
         console.log('BRUSH COLOR');
         $ctrl.brush.color = color;
@@ -35,7 +41,7 @@ const GameController = function($scope) {
     };
 };
 
-GameController.$inject = ["$scope"];
+GameController.$inject = ['$scope'];
 
 const Game = {
     template: tmpl,
