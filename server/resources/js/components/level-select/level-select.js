@@ -1,17 +1,18 @@
-const tmpl = require("./level-select.tmpl.html");
+const tmpl = require('./level-select.tmpl.html');
 
-const LevelSelectController = function ($http, $rootScope) {
+const LevelSelectController = function($http, $rootScope) {
     const $ctrl = this;
 
-    $http.get('/api/level/list')
-        .then((response) => {
+    $http
+        .get('/api/level/list')
+        .then(response => {
             $ctrl.levels = response.data.data;
         })
-        .catch((error) => {
+        .catch(error => {
             console.error(error);
         });
 
-    $ctrl.selectLevel = (level) => {
+    $ctrl.selectLevel = level => {
         console.log('Select level', level);
         $rootScope.$broadcast('selectLevel', level);
     };

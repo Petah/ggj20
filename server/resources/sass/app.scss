@@ -1,17 +1,17 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Internal Imports
-@import "common/mixins";
-@import "common/variables";
+@import 'common/mixins';
+@import 'common/variables';
 
-@import "components/palette";
+@import 'components/palette';
 
 // Globals
 html,
 body {
     color: $black;
-    font-family: "Nunito", sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 15px;
     font-weight: 200;
     margin: 0;
@@ -19,7 +19,6 @@ body {
 }
 
 .g-canvas {
-
 }
 
 .g-palette {

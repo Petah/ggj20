@@ -1,4 +1,4 @@
-@import "functions";
+@import 'functions';
 
 // Animations
 @mixin m-animation($args...) {
@@ -19,13 +19,13 @@
     $src: null;
 
     $extMods: (
-        eot: "?",
-        svg: "#" + str-replace($name, " ", "_"),
+        eot: '?',
+        svg: '#' + str-replace($name, ' ', '_'),
     );
 
     $formats: (
-        otf: "opentype",
-        ttf: "truetype",
+        otf: 'opentype',
+        ttf: 'truetype',
     );
 
     @each $ext in $exts {
@@ -37,7 +37,7 @@
         $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
         $src: append(
             $src,
-            url(quote($path + "." + $extMod)) format(quote($format)),
+            url(quote($path + '.' + $extMod)) format(quote($format)),
             comma
         );
     }

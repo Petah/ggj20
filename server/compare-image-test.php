@@ -1,9 +1,20 @@
 <?php
 
+use Exception;
+
 // compare two images and return score (100 means completelt the same)
 // $repairImage: a broken image to be repaired
 // $userImageName: a broken image AFTER the user draws something
 // $actualImageName: the original image
+/**
+ * @param $repairImageName
+ * @param $userImageName
+ * @param $actualImageName
+ *
+ * @throws Exception
+ *
+ * @return float|int
+ */
 function getScore($repairImageName, $userImageName, $actualImageName) {
 
 	//-------------------------------------------------------------------------
@@ -17,13 +28,13 @@ function getScore($repairImageName, $userImageName, $actualImageName) {
 	$actualImage = imagecreatefrompng($actualImageName);
 
 	if ($repairImage == null) {
-		throw new \Exception('repairImage is not found');
+		throw new Exception('repairImage is not found');
 	}
 	if ($userImage == null) {
-		throw new \Exception('userImage is not found');
+		throw new Exception('userImage is not found');
 	}
 	if ($actualImage == null) {
-		throw new \Exception('actualImage is not found');
+		throw new Exception('actualImage is not found');
 	}
 
 	[$repairImageWidth, $repairImageHeight] = getimagesize($repairImageName);
@@ -35,30 +46,30 @@ function getScore($repairImageName, $userImageName, $actualImageName) {
 	// var_dump("actualImage: width: $actualImageWidth, height: $actualImageHeight");
 
 
-   
+
 	if ($repairImageWidth != $actualImageWidth || $repairImageHeight != $actualImageHeight) {
-		throw new \Exception('image size is not the same between repairImage and actualImage');
+		throw new Exception('image size is not the same between repairImage and actualImage');
 	}
 	if ($userImageWidth != $actualImageWidth || $userImageHeight != $actualImageHeight) {
-		throw new \Exception('image size is not the same between userImage and actualImage');
+		throw new Exception('image size is not the same between userImage and actualImage');
 	}
 	if ($repairImageWidth <= 0) {
-		throw new \Exception('repair image width is 0 or less');
+		throw new Exception('repair image width is 0 or less');
 	}
 	if ($repairImageHeight <= 0) {
-		throw new \Exception('repair image height is 0 or less');
+		throw new Exception('repair image height is 0 or less');
 	}
 	if ($userImageWidth <= 0) {
-		throw new \Exception('user image width is 0 or less');
+		throw new Exception('user image width is 0 or less');
 	}
 	if ($userImageHeight <= 0) {
-		throw new \Exception('user image height is 0 or less');
+		throw new Exception('user image height is 0 or less');
 	}
 	if ($actualImageWidth <= 0) {
-		throw new \Exception('actual image width is 0 or less');
+		throw new Exception('actual image width is 0 or less');
 	}
 	if ($actualImageHeight <= 0) {
-		throw new \Exception('actual image height is 0 or less');
+		throw new Exception('actual image height is 0 or less');
 	}
 
 
@@ -129,7 +140,7 @@ function getScore($repairImageName, $userImageName, $actualImageName) {
 			$repairGreen = 0.0;
 			$repairBlue = 0.0;
 			for ($repairY = $minimumY; $repairY <= $maximumY; $repairY++) {
-				for ($repairX = $minimumX; $repairX <= $maximumX; $repairX++) {				
+				for ($repairX = $minimumX; $repairX <= $maximumX; $repairX++) {
 					$color = imagecolorat($resizedRepairImage, $repairX, $repairY);
 					$red = ($color >> 16) & 0xFF;
 					$green = ($color >> 8) & 0xFF;
@@ -149,7 +160,7 @@ function getScore($repairImageName, $userImageName, $actualImageName) {
 			$userGreen = 0.0;
 			$userBlue = 0.0;
 			for ($userY = $minimumY; $userY <= $maximumY; $userY++) {
-				for ($userX = $minimumX; $userX <= $maximumX; $userX++) {				
+				for ($userX = $minimumX; $userX <= $maximumX; $userX++) {
 					$color = imagecolorat($resizedUserImage, $userX, $userY);
 					$red = ($color >> 16) & 0xFF;
 					$green = ($color >> 8) & 0xFF;
@@ -256,6 +267,6 @@ function getScore($repairImageName, $userImageName, $actualImageName) {
 var_dump("### start");
 $result = getScore(
 	__DIR__ . '/public/images/levels/smiley-repair.png',
-	__DIR__ . '/public/images/levels/smiley-user.png', 
+	__DIR__ . '/public/images/levels/smiley-user.png',
 	__DIR__ . '/public/images/levels/smiley-actual.png');
 var_dump("### score: $result");
