@@ -13,34 +13,32 @@
 // -206: actual image height is 0 or less
 function getScore($userImageName, $actualImageName) {
 
-	$blurSize = 3; // looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
+	$blurSize = 0; // looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
 
 	$userImage = imagecreatefrompng($userImageName);
 	$actualImage = imagecreatefrompng($actualImageName);
 
 	if ($userImage == null) {
-		return -101;
+		throw new \Exception('userImage is not found');
 	}
 	if ($actualImage == null) {
-		return -102;
+		throw new \Exception('actualImage is not found');
 	}
 
-	$userImageSize = getimagesize($userImageName);	
-	$actualImageSize = getimagesize($actualImageName);
-	$userImageWidth = $userImageSize[0];
-	$userImageHeight = $userImageSize[1];
-	$actualImageWidth = $actualImageSize[0];
-	$actualImageHeight = $actualImageSize[1];
+	[$userImageWidth, $userImageHeight] = getimagesize($userImageName);
+    $userImageResized = imagecreatetruecolor(100, 100);
+    imagecopyresampled($userImageResized, $userImage, 0, 0, 0, 0, 100, 100, $userImageWidth, $userImageHeight);
+	[$actualImageWidth, $actualImageHeight] = getimagesize($actualImageName);
 
 	var_dump("userImageWidth: $userImageWidth");
 	var_dump("actualImageWidth: $actualImageWidth");
 	var_dump("userImageHeight: $userImageHeight");
 	var_dump("actualImageHeight: $actualImageHeight");
 
-	if ($userImageWidth != $actualImageWidth) {		
+	if ($userImageWidth != $actualImageWidth) {
 		return -201;
 	}
-	if ($userImageHeight != $actualImageHeight) {		
+	if ($userImageHeight != $actualImageHeight) {
 		return -202;
 	}
 	if ($userImageWidth <= 0) {
@@ -55,14 +53,14 @@ function getScore($userImageName, $actualImageName) {
 	if ($actualImageHeight <= 0) {
 		return -206;
 	}
-	$numberOfPixels = $userImageWidth * $userImageHeight;	
+	$numberOfPixels = $userImageWidth * $userImageHeight;
 
 	$score = 0.0;
 
-	for ($x = 0; $x < $userImageWidth; $x++) {
-		for ($y = 0; $y < $userImageHeight; $y++) {
+	for ($y = 0; $y < $userImageHeight; $y++) {
+		for ($x = 0; $x < $userImageWidth; $x++) {
 
-			// calciulate range for blur 
+			// calciulate range for blur
 			$minimumX = $x - $blurSize;
 			if ($minimumX < 0) {
 				$minimumX = 0;
@@ -94,9 +92,9 @@ function getScore($userImageName, $actualImageName) {
 
 					$userRed += $red;
 					$userGreen += $green;
-					$userBlue += $blue;					
+					$userBlue += $blue;
 				}
-			}			
+			}
 			$userRed /= $numberOfBlurPixels;
 			$userGreen /= $numberOfBlurPixels;
 			$userBlue /= $numberOfBlurPixels;
@@ -114,15 +112,16 @@ function getScore($userImageName, $actualImageName) {
 
 					$actualRed += $red;
 					$actualGreen += $green;
-					$actualBlue += $blue;					
+					$actualBlue += $blue;
 				}
-			}			
+			}
 			$actualRed /= $numberOfBlurPixels;
 			$actualGreen /= $numberOfBlurPixels;
 			$actualBlue /= $numberOfBlurPixels;
 
 
 			// calculate score
+			echo $x . ' ' . $y . ' ' . $userRed  . ' ' .  $actualRed . PHP_EOL;
 			$diffRed = $userRed - $actualRed;
 			$diffGreen = $userGreen - $actualGreen;
 			$diffBlue = $userBlue - $actualBlue;
@@ -147,10 +146,7 @@ function getScore($userImageName, $actualImageName) {
 	return $score;
 }
 
-
 var_dump("### start");
 $result = getScore(__DIR__ . '/public/images/levels/smiley-repair.png', __DIR__ . '/public/images/levels/smiley-actual.png');
+$result = getScore(__DIR__ . '/public/images/levels/smiley-user.png', __DIR__ . '/public/images/levels/smiley-actual.png');
 var_dump("### score: $result");
-
-
-?>
