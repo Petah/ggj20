@@ -14,7 +14,7 @@ const CanvasController = function($element) {
         latestPoint: null,
         strokeWidth: 25,
     };
-    
+
     // Drawing functions
     const continueStroke = newPoint => {
         $ctrl.context.beginPath();
@@ -25,7 +25,7 @@ const CanvasController = function($element) {
         $ctrl.context.lineJoin = "round";
         $ctrl.context.lineTo(newPoint[0], newPoint[1]);
         $ctrl.context.stroke();
-    
+
         $ctrl.brush.latestPoint = newPoint;
     };
 
@@ -34,7 +34,7 @@ const CanvasController = function($element) {
         $ctrl.drawing = true;
         $ctrl.brush.latestPoint = point;
     };
-    
+
     const mouseButtonIsDown = buttons => {
         return (MOUSE_BUTTON_1 & buttons) === MOUSE_BUTTON_1;
     };
@@ -45,7 +45,7 @@ const CanvasController = function($element) {
         }
         continueStroke([evt.offsetX, evt.offsetY]);
     };
-    
+
     const mouseDown = evt => {
         if ($ctrl.drawing) {
             return;
@@ -55,14 +55,14 @@ const CanvasController = function($element) {
         $ctrl.canvas.addEventListener("mousemove", mouseMove, false);
         startStroke([evt.offsetX, evt.offsetY]);
     };
-    
+
     const mouseEnter = evt => {
         if (!mouseButtonIsDown(evt.buttons) || $ctrl.drawing) {
             return;
         }
         mouseDown(evt);
     };
-    
+
     const endStroke = evt => {
         if (!$ctrl.drawing) {
             return;
@@ -79,7 +79,7 @@ const CanvasController = function($element) {
 
         $ctrl.canvas = $element[0].querySelector("#g-canvas__canvas");
         $ctrl.context = $ctrl.canvas.getContext("2d");
-    
+
         // Register event handlers
         $ctrl.canvas.addEventListener("mousedown", mouseDown, false);
         $ctrl.canvas.addEventListener("mouseup", endStroke, false);
@@ -90,7 +90,7 @@ const CanvasController = function($element) {
     $ctrl.$onInit = () => {
         $ctrl.height = $ctrl.height || 800;
         $ctrl.width = $ctrl.width || 540;
-    
+
         initCanvas();
     };
 };

@@ -1,6 +1,6 @@
 const tmpl = require("./level-select.tmpl.html");
 
-const LevelSelectController = function ($http) {
+const LevelSelectController = function ($http, $rootScope) {
     const $ctrl = this;
 
     $http.get('/api/level/list')
@@ -13,10 +13,11 @@ const LevelSelectController = function ($http) {
 
     $ctrl.selectLevel = (level) => {
         console.log('Select level', level);
+        $rootScope.$broadcast('selectLevel', level);
     };
 };
 
-LevelSelectController.$inject = ['$http'];
+LevelSelectController.$inject = ['$http', '$rootScope'];
 
 const LevelSelect = {
     template: tmpl,
