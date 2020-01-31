@@ -1,6 +1,9 @@
 const tmpl = require("./palette.tmpl.html");
 
-const PaletteController = function ($scope) {
+const PaletteController = function (
+    $scope,
+    $rootScope,
+) {
     const $ctrl = this;
 
     $ctrl.colors = [
@@ -24,6 +27,7 @@ const PaletteController = function ($scope) {
 
     $ctrl.changeColor = (color) => {
         console.log('Change color', color);
+        $rootScope.$broadcast('changeColor', color);
     };
 
     $scope.$on('selectLevel', (event, level) => {
@@ -31,7 +35,10 @@ const PaletteController = function ($scope) {
     });
 };
 
-PaletteController.$inject = ['$scope'];
+PaletteController.$inject = [
+    '$scope',
+    '$rootScope',
+];
 
 const Palette = {
     template: tmpl,

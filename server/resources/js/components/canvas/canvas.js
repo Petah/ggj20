@@ -4,7 +4,10 @@ const brushEraser = require("./brushes/eraser");
 
 const MOUSE_BUTTON_1 = 0b01;
 
-const CanvasController = function($element) {
+const CanvasController = function (
+    $element,
+    $scope,
+) {
     const $ctrl = this;
 
     $ctrl.canvas = null;
@@ -27,7 +30,7 @@ const CanvasController = function($element) {
     const continueStroke = newPoint => {
         $ctrl.brush.selected.handler($ctrl.canvas, $ctrl.context, $ctrl.brush, newPoint);
     };
-    
+
     const endStroke = evt => {
         if (!$ctrl.drawing) {
             return;
@@ -47,7 +50,7 @@ const CanvasController = function($element) {
         }
         continueStroke([evt.offsetX, evt.offsetY]);
     };
-    
+
     const mouseDown = evt => {
         if ($ctrl.drawing) {
             return;
@@ -57,7 +60,7 @@ const CanvasController = function($element) {
         $ctrl.canvas.addEventListener("mousemove", mouseMove, false);
         startStroke([evt.offsetX, evt.offsetY]);
     };
-    
+
     const mouseEnter = evt => {
         if (!mouseButtonIsDown(evt.buttons) || $ctrl.drawing) {
             return;
@@ -73,7 +76,7 @@ const CanvasController = function($element) {
 
         $ctrl.canvas = $element[0].querySelector("#g-canvas__canvas");
         $ctrl.context = $ctrl.canvas.getContext("2d");
-    
+
         // Register event handlers
         $ctrl.canvas.addEventListener("mousedown", mouseDown, false);
         $ctrl.canvas.addEventListener("mouseup", endStroke, false);
@@ -84,12 +87,30 @@ const CanvasController = function($element) {
     $ctrl.$onInit = () => {
         $ctrl.height = $ctrl.height || 800;
         $ctrl.width = $ctrl.width || 540;
-    
+
         initCanvas();
     };
+
+    $scope.$on('changeColor', (event, color) => {
+        console.log(color);
+    });
+
+    $scope.$on('selectLevel', (event, level) => {
+        console.log('Drawing level on canvas', level.attributes);
+        $ctrl.width = level.attributes.width;
+        $ctrl.height = level.attributes.height;
+        const image = new Image();
+        image.onload = function () {
+            $ctrl.context.drawImage(image, 0, 0);
+        };
+        image.src = level.attributes.url;
+    });
 };
 
-CanvasController.$inject = ["$element"];
+CanvasController.$inject = [
+    "$element",
+    "$scope",
+];
 
 const Canvas = {
     template: tmpl,
