@@ -28,8 +28,7 @@ popd > /dev/null
 
 # Run DB migrations, and flush cache and templates
 printf "${COLOR_RED}> Running DB migrations, and flushing cache and templates${COLOR_INITIAL}\n"
-# ssh ggj20@ggj20.versite.co.nz "cd /container/application ; php artisan optimize"
-# ssh ggj20@ggj20.versite.co.nz "cd /container/application ; php artisan migrate --force"
+ssh ggj20@ggj20.versite.co.nz "cd /container/application ; php artisan optimize ; php artisan migrate --force ; chmod -R 777 storage"
 
 # Success!
 printf "${COLOR_RED}> Deployment complete${COLOR_INITIAL}\n"

@@ -40,7 +40,8 @@ const ScoreController = function (
 
     $scope.$on('comparison', (event, comparison) => {
         console.log('Comparison', comparison);
-        $ctrl.score = ((comparison.attributes.score - 50) * 1000).toFixed();
+        $ctrl.score = comparison.attributes.score;
+        // $ctrl.score = ((comparison.attributes.score - 50) * 1000).toFixed();
     });
 
 };
