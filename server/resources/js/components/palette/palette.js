@@ -13,6 +13,10 @@ const PaletteController = function($scope, $rootScope) {
         $ctrl.colors = level.attributes.colors;
         $ctrl.changeColor(level.attributes.colors[0]);
     });
+
+    $scope.$on('timeUp', (event, level) => {
+        $ctrl.colors = [];
+    });
 };
 
 PaletteController.$inject = ['$scope', '$rootScope'];
