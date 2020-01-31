@@ -8,14 +8,17 @@
                 g-on-start-stroke="$ctrl.onBrushStartStroke(point)"
                 g-on-continue-stroke="$ctrl.onBrushContinueStroke(canvas, context, point)"
                 g-on-end-stroke="$ctrl.onBrushEndStroke(event)"
+                ng-show="$ctrl.level"
             ></g-canvas>
         </div>
         <div class="col-md-6">
-            <g-score></g-score>
+            <g-score
+                ng-show="$ctrl.level"
+            ></g-score>
             <g-palette
                 g-on-color-change="$ctrl.onPaletteColorChange(color)"
+                ng-show="$ctrl.level"
             ></g-palette>
         </div>
     </div>
 </div>
-

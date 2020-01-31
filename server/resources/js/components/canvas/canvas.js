@@ -2,7 +2,7 @@ const tmpl = require('./canvas.tmpl.html');
 
 const MOUSE_BUTTON_1 = 0b01;
 
-const CanvasController = function($element, $scope, $rootScope) {
+const CanvasController = function ($element, $scope, $rootScope) {
     const $ctrl = this;
 
     $ctrl.canvas = null;
@@ -105,15 +105,23 @@ const CanvasController = function($element, $scope, $rootScope) {
         console.log('Drawing level on canvas', level.attributes);
         $ctrl.width = level.attributes.width;
         $ctrl.height = level.attributes.height;
+
+        $ctrl.context.clearRect(0, 0, $ctrl.canvas.width, $ctrl.canvas.height);
+
         const image = new Image();
-        image.onload = function() {
+        image.onload = () => {
             $ctrl.context.drawImage(image, 0, 0);
+            console.log('Canvas ready');
         };
         image.src = level.attributes.url;
     });
 };
 
-CanvasController.$inject = ['$element', '$scope', '$rootScope'];
+CanvasController.$inject = [
+    '$element',
+    '$scope',
+    '$rootScope',
+];
 
 const Canvas = {
     template: tmpl,

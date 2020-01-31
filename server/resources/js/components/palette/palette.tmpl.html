@@ -3,5 +3,4 @@
     <div ng-repeat="color in $ctrl.colors">
         <button class="btn" type="button" ng-style="{ backgroundColor: color.hex }" ng-click="$ctrl.changeColor(color)">{{ color.name || color.hex }}</button>
     </div>
-    <img ng-src="images/palette.png" />
 </div>

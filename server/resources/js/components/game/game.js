@@ -2,7 +2,7 @@ import tmpl from './game.tmpl.html';
 import PaintBrush from '../../common/brushes/paint_brush';
 import colors from '../../common/colors';
 
-const GameController = function($scope) {
+const GameController = function ($scope) {
     const $ctrl = this;
 
     $ctrl.brush = {
@@ -32,13 +32,18 @@ const GameController = function($scope) {
     });
 
     $scope.$on('changeColor', (event, color) => {
-        console.log('BRUSH COLOR');
+        console.log('Set brush color', color);
         $ctrl.brush.color = color;
     });
 
     $ctrl.$onInit = () => {
         console.log('Game Loaded.');
     };
+
+    $scope.$on('selectLevel', (event, level) => {
+        console.log('Setting game level', level);
+        $ctrl.level = level;
+    });
 };
 
 GameController.$inject = ['$scope'];
