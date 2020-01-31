@@ -79,6 +79,21 @@ const CanvasController = function($element, $scope, $rootScope) {
         $ctrl.canvas.addEventListener('mouseenter', mouseEnter, false);
     };
 
+    // $http
+    //     .post('/api/compare', {
+    //         data: {
+    //             attributes: {
+    //                 image: context.toDataUri(),
+    //             }
+    //         }
+    //     })
+    //     .then(response => {
+    //         $ctrl.levels = response.data.data;
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
+
     $ctrl.$onInit = () => {
         $ctrl.height = $ctrl.height || 800;
         $ctrl.width = $ctrl.width || 540;
