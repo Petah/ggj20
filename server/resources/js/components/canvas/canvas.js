@@ -24,6 +24,7 @@ const CanvasController = function (
 
     const endStroke = (event) => {
         console.log('Canvas end stroke');
+        event.preventDefault();
         $ctrl.drawing = false;
     };
 
@@ -38,8 +39,8 @@ const CanvasController = function (
         let y;
         if (event.targetTouches && event.targetTouches.length) {
             const rect = event.target.getBoundingClientRect();
-            x = event.targetTouches[0].pageX - rect.left;
-            y = event.targetTouches[0].pageY - rect.top;
+            x = event.targetTouches[0].clientX - rect.left;
+            y = event.targetTouches[0].clientY - rect.top;
         } else {
             x = event.offsetX;
             y = event.offsetY;
@@ -49,6 +50,7 @@ const CanvasController = function (
 
     const mouseMove = (event) => {
         console.log('Canvas mouse move', $ctrl.drawing, event);
+        event.preventDefault();
         if (!$ctrl.drawing) {
             return;
         }
@@ -107,6 +109,7 @@ const CanvasController = function (
 
     const mouseDown = (event) => {
         console.log('Canvas mouse down');
+        event.preventDefault();
         $ctrl.drawing = true;
         $ctrl.lastPoint = getEventPosition(event);
         mouseMove(event);
@@ -114,6 +117,7 @@ const CanvasController = function (
 
     const mouseEnter = (event) => {
         console.log('Canvas mouse enter');
+        event.preventDefault();
         if (!mouseButtonIsDown(event.buttons) || $ctrl.drawing) {
             return;
         }
