@@ -32,6 +32,9 @@ PaletteController.$inject = [];
 const Palette = {
     template: tmpl,
     controller: PaletteController,
+    bindings: {
+        onColorChange: "&?onColorChange",
+    },
 };
 
 export default Palette;

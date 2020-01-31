@@ -1,6 +1,12 @@
-const brush = {
-    type: "paint_brush",
-    handler: (canvas, context, brush, newPoint) => {
+import Brush from "./brush";
+
+export default class PaintBrush extends Brush {
+    constructor(params) {
+        super(params);
+        this.type = "paint_brush";
+    }
+
+    handler (canvas, context, brush, newPoint) {
         context.beginPath();
         context.moveTo(brush.latestPoint[0], brush.latestPoint[1]);
         context.strokeStyle = brush.colour;
@@ -11,7 +17,5 @@ const brush = {
         context.stroke();
 
         brush.latestPoint = newPoint;
-    },
-};
-
-export default brush;
+    }
+}

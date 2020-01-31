@@ -1,6 +1,4 @@
 const tmpl = require("./canvas.tmpl.html");
-const brushPaint = require("./brushes/paint_brush");
-const brushEraser = require("./brushes/eraser");
 
 const MOUSE_BUTTON_1 = 0b01;
 
@@ -11,29 +9,36 @@ const CanvasController = function($element) {
     $ctrl.content = null;
     $ctrl.drawing = false;
 
-    $ctrl.brush = {
-        colour: "#3d34a5",
-        latestPoint: null,
-        strokeWidth: 25,
-        selected: brushPaint,
-    };
-
     // Drawing functions
     const startStroke = point => {
         $ctrl.drawing = true;
-        $ctrl.brush.latestPoint = point;
+
+        if ($ctrl.onStartStroke) {
+            $ctrl.onStartStroke({ point: point });
+        }
     };
 
-    const continueStroke = newPoint => {
-        $ctrl.brush.selected.handler($ctrl.canvas, $ctrl.context, $ctrl.brush, newPoint);
+    const continueStroke = point => {
+        if ($ctrl.onContinueStroke) {
+            $ctrl.onContinueStroke({
+                canvas: $ctrl.canvas,
+                context: $ctrl.context,
+                point: point,
+            });
+        }
     };
-    
-    const endStroke = evt => {
+
+    const endStroke = event => {
         if (!$ctrl.drawing) {
             return;
         }
+
         $ctrl.drawing = false;
-        evt.currentTarget.removeEventListener("mousemove", mouseMove, false);
+        event.currentTarget.removeEventListener("mousemove", mouseMove, false);
+    
+        if ($ctrl.onEndStroke) {
+            $ctrl.onEndStroke({ event: event });
+        }
     };
 
     // Event helpers
@@ -95,6 +100,10 @@ const Canvas = {
     template: tmpl,
     controller: CanvasController,
     bindings: {
+        brush: "<?gBrush",
+        onStartStroke: "&?gOnStartStroke",
+        onContinueStroke: "&?gOnContinueStroke",
+        onEndStroke: "&?gOnEndStroke",
         height: "<?gHeight",
         width: "<?gWidth",
     },
