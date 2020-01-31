@@ -242,13 +242,15 @@ function getScore($repairImageName, $userImageName, $actualImageName) {
 	if ($repairScore == 0.0 && $userScore == 0.0) {
 		return 0.0;
 	}
-	if ($repairScore >= $userScore) {
-		return 50.0 - ($repairScore - $userScore) / $repairScore * 50.0;
+	if ($repairScore == 100.0) {
+		return $userScore;
 	} else {
-		return ($userScore - $repairScore) / (100.0 - $repairScore) * 50.0 + 50.0;
+		$score = ($userScore - $repairScore) / (100.0 - $repairScore) * 50.0 + 50.0;
+		if ($score < 0) {
+			$score = 0.0;
+		}
+		return $score;
 	}
-
-	return $score;
 }
 
 var_dump("### start");
