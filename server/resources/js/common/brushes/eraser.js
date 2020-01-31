@@ -6,7 +6,7 @@ export default class Eraser extends Brush {
         this.type = "eraser";
     }
 
-    handler (canvas, context, newPoint) {
+    handler (canvas, context, oldPoint, newPoint, color, strokeWidth) {
         console.log("Erasing", newPoint);
     }
 }

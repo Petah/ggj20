@@ -1,12 +1,12 @@
 import tmpl from "./game.tmpl.html";
-import PaintBrush from "../brushes/paint_brush";
-import Eraser from "../brushes/eraser";
+import PaintBrush from "../../common/brushes/paint_brush";
+import colors from "../../common/colors";
 
 const GameController = function() {
     const $ctrl = this;
 
     $ctrl.brush = {
-        colour: "#3d34a5",
+        colour: colors.purple.hex,
         latestPoint: null,
         strokeWidth: 25,
         selected: new PaintBrush(),
@@ -21,7 +21,8 @@ const GameController = function() {
     };
 
     $ctrl.onBrushContinueStroke = (canvas, context, point) => {
-        $ctrl.brush.selected.handler(canvas, context, $ctrl.brush, point);
+        $ctrl.brush.selected.handler(canvas, context, $ctrl.brush.latestPoint, point);
+        $ctrl.brush.latestPoint = point;
     };
 
     $ctrl.onBrushEndStroke = event => {

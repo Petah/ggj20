@@ -4,8 +4,8 @@ export default class Brush {
         this.type = null;
     }
 
-    handler (canvas, context, newPoint) {
-        console.log("Handling stroke", newPoint);
+    handler (canvas, context, oldPoint, newPoint, color, strokeWidth) {
+        console.log("Handling stroke", newPoint, color, strokeWidth);
     }
 
     get params() {
