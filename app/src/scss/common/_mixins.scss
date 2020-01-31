@@ -1,0 +1,51 @@
+@import "functions";
+
+// Animations
+@mixin m-animation($args...) {
+    -webkit-animation: $args;
+    -moz-animation: $args;
+    -o-animation: $args;
+    animation: $args;
+}
+
+// Font-face
+@mixin ps-font-face(
+    $name,
+    $path,
+    $weight: null,
+    $style: null,
+    $exts: eot woff2 woff ttf svg
+) {
+    $src: null;
+
+    $extMods: (
+        eot: "?",
+        svg: "#" + str-replace($name, " ", "_"),
+    );
+
+    $formats: (
+        otf: "opentype",
+        ttf: "truetype",
+    );
+
+    @each $ext in $exts {
+        $extMod: if(
+            map-has-key($extMods, $ext),
+            $ext + map-get($extMods, $ext),
+            $ext
+        );
+        $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+        $src: append(
+            $src,
+            url(quote($path + "." + $extMod)) format(quote($format)),
+            comma
+        );
+    }
+
+    @font-face {
+        font-family: quote($name);
+        font-style: $style;
+        font-weight: $weight;
+        src: $src;
+    }
+}

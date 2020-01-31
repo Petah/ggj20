@@ -1,0 +1,32 @@
+// Colors
+$white: #fff !default;
+$black: #121212 !default;
+$gray: #636b6f !default;
+$gray-100: #f8fafc !default;
+$gray-800: #343a40 !default;
+$green: #218838 !default;
+$cyan: #17a2b8 !default;
+$blue: #3490dc !default;
+$indigo: #6574cd !default;
+$purple: #9561e2 !default;
+$pink: #f66d9b !default;
+$red: #e3342f !default;
+$orange: #f6993f !default;
+$yellow: #ffed4a !default;
+$green: #38c172 !default;
+$teal: #4dc0b5 !default;
+$cyan: #6cb2eb !default;
+
+// Component Color
+$color-background: $white;
+$color-heading: $gray;
+$color-body: $gray;
+
+// Typography
+$font-family-sans-serif: "Nunito", sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Overrides
+$primary: $gray-800 !default;
+$body-bg: $gray-100;
