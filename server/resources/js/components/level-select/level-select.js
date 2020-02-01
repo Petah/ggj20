@@ -2,7 +2,6 @@ const tmpl = require('./level-select.tmpl.html');
 
 const LevelSelectController = function ($http, $rootScope, AudioService) {
     const $ctrl = this;
-    const audio = new AudioService();
 
     $ctrl.state = 'welcome';
     $ctrl.levelIndex = 0;
@@ -17,7 +16,7 @@ const LevelSelectController = function ($http, $rootScope, AudioService) {
         });
 
     $ctrl.showLevelSelect = () => {
-        audio.play("click");
+        AudioService.play("click");
         $ctrl.state = 'level-select';
     };
 
@@ -25,7 +24,7 @@ const LevelSelectController = function ($http, $rootScope, AudioService) {
         console.log('Select level', level);
         $('.g-level-select .modal').modal('hide');
 
-        audio.play("click");
+        AudioService.play("click");
         $rootScope.$broadcast('selectLevel', level);
     };
 

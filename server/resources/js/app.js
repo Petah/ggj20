@@ -14,7 +14,7 @@ try {
     // Init Angular App
     const app = angular
         .module('GGJ2020', [])
-        .factory('AudioService', AudioService)
+        .service('AudioService', AudioService)
         .component('gGame', Game)
         .component('gCanvas', Canvas)
         .component('gPalette', Palette)

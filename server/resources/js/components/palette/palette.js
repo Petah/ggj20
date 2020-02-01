@@ -1,6 +1,6 @@
 const tmpl = require('./palette.tmpl.html');
 
-const PaletteController = function($scope, $rootScope) {
+const PaletteController = function($scope, $rootScope, AudioService) {
     const $ctrl = this;
     $ctrl.colors = [];
     $ctrl.color = null;
@@ -15,6 +15,7 @@ const PaletteController = function($scope, $rootScope) {
     $ctrl.changeBrush = brush => {
         console.log('Change brush', brush);
         $ctrl.brush = brush;
+        AudioService.play('brush');
         $rootScope.$broadcast('changeBrush', brush);
     };
 
@@ -33,7 +34,7 @@ const PaletteController = function($scope, $rootScope) {
     });
 };
 
-PaletteController.$inject = ['$scope', '$rootScope'];
+PaletteController.$inject = ['$scope', '$rootScope', 'AudioService'];
 
 const Palette = {
     template: tmpl,

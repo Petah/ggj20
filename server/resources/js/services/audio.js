@@ -1,58 +1,57 @@
-const AudioService = function() {
-    return class AudioService {
-        constructor() {
-            this._sounds = {};
+class AudioService {
+    constructor() {
+        this._sounds = {};
+    }
+
+    play(sound, options = {}) {
+        const loadedSound = this.getSound(sound, options);
+        if (!loadedSound) {
+            return;
         }
 
-        play(sound, options = {}) {
-            const loadedSound = this.getSound(sound, options);
-            if (!loadedSound) {
-                return;
+        loadedSound.currentTime = 0;
+        loadedSound.play();
+    }
+
+    stop(sound) {
+        const loadedSound = this.getSound(sound);
+        if (!loadedSound) {
+            return;
+        }
+
+        loadedSound.pause();
+        loadedSound.currentTime = 0;
+    }
+
+    getSound(sound) {
+        if (!this.sounds[sound]) {
+            const filename = AudioService.soundsList[sound];
+            if (!filename) {
+                return null;
             }
 
-            loadedSound.currentTime = 0;
-            loadedSound.play();
+            this.sounds[sound] = new Audio(filename);
         }
 
-        stop(sound) {
-            const loadedSound = this.getSound(sound);
-            if (!loadedSound) {
-                return;
-            }
+        return this.sounds[sound];
+    }
 
-            loadedSound.pause();
-            loadedSound.currentTime = 0;
-        }
+    get sounds() {
+        return this._sounds;
+    }
 
-        getSound(sound) {
-            if (!this.sounds[sound]) {
-                const filename = AudioService.soundsList[sound];
-                if (!filename) {
-                    return null;
-                }
-
-                this.sounds[sound] = new Audio(filename);
-            }
-
-            return this.sounds[sound];
-        }
-
-        get sounds() {
-            return this._sounds;
-        }
-
-        static get soundsList() {
-            return {
-                click: "/sounds/click.mp3",
-                paintBrush: "/sounds/paintbrush.mp3",
-                palette: "/sounds/palette.mp3",
-                gong: "/sounds/gong.mp3",
-                tick: "/sounds/tick.mp3",
-                tock: "/sounds/tock.mp3",
-            };
-        }
-    };
-};
+    static get soundsList() {
+        return {
+            brush: "/sounds/brush.mp3",
+            click: "/sounds/click.mp3",
+            paintBrush: "/sounds/paintbrush.mp3",
+            palette: "/sounds/palette.mp3",
+            gong: "/sounds/gong.mp3",
+            tick: "/sounds/tick.mp3",
+            tock: "/sounds/tock.mp3",
+        };
+    }
+}
 
 AudioService.$inject = [];
 
