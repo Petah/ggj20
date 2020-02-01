@@ -5,8 +5,10 @@ const ScoreController = function (
     $scope,
     $rootScope,
     $http,
+    AudioService,
 ) {
     const $ctrl = this;
+    const audio = new AudioService();
 
     let interval = null;
 
@@ -20,6 +22,7 @@ const ScoreController = function (
         }).catch((error) => {
             console.error(error);
         });
+        audio.stop("tickTock", true);
         $rootScope.$broadcast('timeUp');
     };
 
@@ -28,13 +31,14 @@ const ScoreController = function (
             highScore.attributes.score = formatScore(highScore.attributes.score);
             return highScore;
         });
-    }
+    };
 
     $scope.$on('selectLevel', (event, level) => {
         $ctrl.levelTime = level.attributes.timeLimit;
         $ctrl.timeRemaining = $ctrl.levelTime;
         $ctrl.startTime = new Date().getTime();
         $ctrl.score = 0;
+        audio.play("tickTock", 1.0, true);
 
         // Start timer
         if (interval) {
@@ -43,6 +47,12 @@ const ScoreController = function (
         interval = $interval(() => {
             $ctrl.timeRemaining = ($ctrl.levelTime - ((new Date().getTime() - $ctrl.startTime) / 1000)).toFixed(2);
             $ctrl.timeRemainingFormatted = formatTimeRemaining($ctrl.timeRemaining);
+            if ($ctrl.timeRemaining <= 30) {
+                audio.changePlaybackRate("tickTock", 2.0);
+            }
+            if ($ctrl.timeRemaining <= 10) {
+                audio.changePlaybackRate("tickTock", 3.0);
+            }
             if ($ctrl.timeRemaining <= 0) {
                 timeUp();
             }
@@ -118,7 +128,7 @@ const ScoreController = function (
             neg = min;
         }
         return 'rotate(' + neg + 'deg)';
-    }
+    };
 
     $ctrl.stop = () => {
         timeUp();
@@ -134,6 +144,7 @@ ScoreController.$inject = [
     '$scope',
     '$rootScope',
     '$http',
+    'AudioService',
 ];
 
 const Score = {
