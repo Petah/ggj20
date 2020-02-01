@@ -13,10 +13,10 @@ class HighScoreController extends Controller
         $highScore = HighScore::create([
             'level_id' => $request->input('data.attributes.levelId'),
             'player_name' => $request->input('data.attributes.playerName'),
-            'score' => $request->input('data.attributes.score'),
-            'bonus' => $request->input('data.attributes.bonus'),
+            'score' => $request->input('data.attributes.score') ?: 0,
+            'bonus' => $request->input('data.attributes.bonus') ?: 0,
         ]);
-        return $this->getHighScores($request->input('data.attributes.levelId'));
+        return $this->getHighScores($request->input('data.attributes.levelId'), $highScore);
     }
 
     public function fetch(Request $request, string $levelId)
@@ -24,11 +24,11 @@ class HighScoreController extends Controller
         return $this->getHighScores($levelId);
     }
 
-    private function getHighScores(string $levelId)
+    private function getHighScores(string $levelId, ?HighScore $newHighScore = null)
     {
         $highScores = HighScore::where('level_id', $levelId)->orderBy('score', 'desc')->limit(5)->get();
         return [
-            'data' => $highScores->map(function ($highScore) {
+            'data' => $highScores->map(function ($highScore) use ($newHighScore) {
                 return [
                     'id' => $highScore->id,
                     'type' => 'HighScore',
@@ -38,6 +38,7 @@ class HighScoreController extends Controller
                         'score' => (float) $highScore->score,
                         'bonus' => (float) $highScore->bonus,
                         'timeAgo' => $highScore->created_at->diffForHumans(),
+                        'new' => $newHighScore && $newHighScore->id == $highScore->id,
                     ],
                 ];
             })
