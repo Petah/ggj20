@@ -116,6 +116,28 @@ class LevelController extends Controller
                     ['hex' => '#000000'],
                 ],
             ],
+            'moon' => [
+                'image' => 'moon',
+                'name' => 'Moon',
+                'timeLimit' => 300,
+                'debuffs' => [],
+                'colors' => [
+                    ['hex' => '#d7cbca'],
+                    ['hex' => '#998f8c'],
+                    ['hex' => '#635b5a'],
+                    ['hex' => '#000000'],
+                ],
+            ],
+            'nz' => [
+                'image' => 'nz',
+                'name' => 'New Zealand',
+                'timeLimit' => 300,
+                'debuffs' => [],
+                'colors' => [
+                    ['hex' => '#657151'],
+                    ['hex' => '#172642'],   
+                ],
+            ],
         ];
     }
 }
