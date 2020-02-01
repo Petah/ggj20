@@ -478,3 +478,10 @@ em {
         border-right: 1px solid #2196f3;
     }
 }
+
+// Modal fixes
+.modal-dialog {
+    @media (min-width: 800px) {
+        margin-top: 6em;
+    }
+}
