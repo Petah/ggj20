@@ -319,6 +319,11 @@ g-score {
         overflow: hidden;
         max-height: 540px;
     }
+
+    input {
+        border-width: 3px !important;
+        border-radius: 6px !important;
+    }
 }
 
 .p-game-reload {
@@ -391,4 +396,20 @@ g-score {
     right: -50px;
     bottom: -100px;
     max-width: 130px;
+}
+
+.g-btn-bg {
+    background-image: url(/images/btn_blue.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 137px;
+    background-color: transparent;
+    border: 0;
+    font-size: 22px;
+
+    &:hover {
+        background-color: transparent;
+        border: 0;
+        opacity: 0.9;
+    }
 }

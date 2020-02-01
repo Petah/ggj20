@@ -27,9 +27,9 @@
                         </div>
 
                         <div class="input-group mb-3" ng-show="!$ctrl.submittingScore && !$ctrl.submittedScore">
-                            <input type="text" class="form-control" placeholder="Your name..." ng-model="$ctrl.playerName">
+                            <input type="text" class="form-control mr-4" placeholder="Your name..." ng-model="$ctrl.playerName">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" ng-click="$ctrl.submitScore()">Submit score</button>
+                                <button class="btn btn-primary g-btn-bg" type="button" ng-click="$ctrl.submitScore()">Submit score</button>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,9 @@
                             </tr>
                         </table>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="location.reload()">Try again</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary g-btn-bg" onclick="location.reload()">Try again</button>
+                    </div>
                 </div>
             </div>
             <img draggable="false" class="g-clippy" src="/images/clippy.png" />
