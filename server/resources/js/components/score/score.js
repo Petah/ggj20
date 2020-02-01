@@ -16,12 +16,19 @@ const ScoreController = function (
         $interval.cancel(interval);
         $('.g-score .modal').modal('show');
         $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
-            $ctrl.highScores = response.data.data;
+            $ctrl.highScores = mapHighScores(response.data.data);
         }).catch((error) => {
             console.error(error);
         });
         $rootScope.$broadcast('timeUp');
     };
+
+    const mapHighScores = (highScores) => {
+        return highScores.map((highScore) => {
+            highScore.attributes.score = formatScore(highScore.attributes.score);
+            return highScore;
+        });
+    }
 
     $scope.$on('selectLevel', (event, level) => {
         $ctrl.levelTime = level.attributes.timeLimit;
@@ -89,7 +96,7 @@ const ScoreController = function (
         }).then((response) => {
             $ctrl.submittingScore = false;
             $ctrl.submittedScore = true;
-            $ctrl.highScores = response.data.data;
+            $ctrl.highScores = mapHighScores(response.data.data);
         }).catch((error) => {
             $ctrl.submittingScore = false;
             console.error(error);
