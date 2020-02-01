@@ -153,7 +153,7 @@ const CanvasController = function (
             return;
         }
 
-        $ctrl.canvas = $element[0].querySelector('#g-canvas__canvas');
+        $ctrl.canvas = $element[0].querySelector('#g-canvas-canvas');
         $ctrl.context = $ctrl.canvas.getContext('2d');
 
         // Register event handlers

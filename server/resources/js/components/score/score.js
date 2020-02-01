@@ -1,3 +1,5 @@
+import initComparisons from "./image-compare";
+
 const tmpl = require("./score.tmpl.html");
 
 const ScoreController = function (
@@ -8,6 +10,7 @@ const ScoreController = function (
     AudioService,
 ) {
     const $ctrl = this;
+    $ctrl.state = 'scores';
 
     let interval = null;
 
@@ -25,6 +28,15 @@ const ScoreController = function (
             backdrop: 'static',
             keyboard: false,
         });
+
+        const canvas = $('#g-compare').attr({
+            width: $('#g-canvas-canvas').attr('width'),
+            height: $('#g-canvas-canvas').attr('height'),
+        })
+        const context = canvas[0].getContext('2d');
+        context.drawImage($('#g-canvas-canvas')[0], 0, 0, $('#g-canvas-canvas').attr('width'), $('#g-canvas-canvas').attr('height'));
+        initComparisons();
+
         $('.g-score .modal').modal('show');
 
         $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
