@@ -167,35 +167,33 @@ g-palette {
         box-shadow: none;
     }
 
-    .g-palette-brush-thin {
-        background-image: url(/images/brush_small.png);
-        background-repeat: no-repeat;
-        background-size: contain;
+    .g-palette-brush {
         width: 43px;
         height: 284px;
         position: absolute;
-        left: 110px;
         top: 85px;
+        padding: 0 25px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
         cursor: pointer;
 
-        &.g-palette-brush-selected {
-            background-image: url(/images/brush_small_selected.png);
+        &--thin {
+            background-image: url(/images/brush_small.png);
+            left: 105px;
+
+            &.g-palette-brush--selected {
+                background-image: url(/images/brush_small_selected.png);
+            }
         }
-    }
 
-    .g-palette-brush-thick {
-        background-image: url(/images/brush_big.png);
-        background-repeat: no-repeat;
-        background-size: contain;
-        width: 43px;
-        height: 284px;
-        position: absolute;
-        left: 60px;
-        top: 85px;
-        cursor: pointer;
+        &--thick {
+            background-image: url(/images/brush_big.png);
+            left: 50px;
 
-        &.g-palette-brush-selected {
-            background-image: url(/images/brush_big_selected.png);
+            &.g-palette-brush--selected {
+                background-image: url(/images/brush_big_selected.png);
+            }
         }
     }
 }
@@ -258,8 +256,8 @@ g-score {
         background-image: url(/images/clock.png);
         background-repeat: no-repeat;
         background-size: contain;
-        width: 408px;
-        height: 234px;
+        width: 390px;
+        height: 220px;
 
         .g-score-clock-background {
             opacity: 0.1;
@@ -268,9 +266,9 @@ g-score {
         .g-score-clock-background,
         .g-score-clock-foreground {
             position: absolute;
-            top: 64px;
-            left: 92px;
-            font-size: 100px;
+            top: 61px;
+            left: 90px;
+            font-size: 90px;
             font-family: "digital-7", sans-serif;
             color: #b63a3f;
         }
@@ -283,8 +281,7 @@ g-score {
         background-size: contain;
         width: 350px;
         height: 300px;
-        margin: auto;
-        margin-top: 1em;
+        margin: 30px auto 0;
     }
 
     .g-score-gauge-arrow {

@@ -21,7 +21,12 @@ const ScoreController = function (
         $ctrl.timeUp = true;
         AudioService.play("gong");
         $interval.cancel(interval);
+        $('.g-score .modal').modal({
+            backdrop: 'static',
+            keyboard: false,
+        });
         $('.g-score .modal').modal('show');
+
         $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
             $ctrl.highScores = mapHighScores(response.data.data);
         }).catch((error) => {
