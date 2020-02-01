@@ -190,6 +190,10 @@ const CanvasController = function (
     $scope.$on('changeColor', (event, color) => {
         $ctrl.color = color;
     });
+
+    $scope.$on('timeUp', (event, level) => {
+        $ctrl.level = null;
+    });
 };
 
 CanvasController.$inject = [

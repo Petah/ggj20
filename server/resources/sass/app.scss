@@ -169,8 +169,8 @@ g-palette {
 }
 
 .g-level-select {
-    img {
-        max-width: 100px;
+    .g-level-select-logo {
+        max-width: 500px;
     }
 
     h1 {
@@ -199,6 +199,11 @@ g-palette {
     .g-level-select-arrow {
         cursor: pointer;
         padding: 1em;
+    }
+
+    .g-level-select-instructions {
+        margin-left: 140px;
+        margin-top: 20px;
     }
 }
 
@@ -330,7 +335,7 @@ g-score {
 }
 
 .modal-backdrop {
-    display: none !important;
+    // display: none !important;
 }
 
 .modal-content {

@@ -4,16 +4,20 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div ng-show="$ctrl.state == 'welcome'">
-                        <h1>Repainter</h1>
-                        <p class="mb-0">
-                            <b>INSTRUCTIONS:</b>
-                        </p>
-                        <ul>
-                            <li>Pick your level</li>
-                            <li>Fix the damaged painting</li>
-                            <li>Choose colors and size in the palette</li>
-                            <li>Get points based on accuracy and speed</li>
-                        </ul>
+                        <div class="text-center">
+                            <img class="g-level-select-logo" ng-src="/images/logo.png" />
+                        </div>
+                        <div class="g-level-select-instructions">
+                            <p class="mb-0">
+                                <b>INSTRUCTIONS:</b>
+                            </p>
+                            <ul>
+                                <li>Pick your level</li>
+                                <li>Fix the damaged painting</li>
+                                <li>Choose colors and size in the palette</li>
+                                <li>Get points based on accuracy and speed</li>
+                            </ul>
+                        </div>
                         <div class="text-center">
                             <button class="btn btn-primary g-go" ng-click="$ctrl.state = 'level-select'"></button>
                         </div>
