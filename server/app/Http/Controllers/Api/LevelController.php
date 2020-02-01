@@ -36,17 +36,6 @@ class LevelController extends Controller
     public static function getImages()
     {
         return [
-            'dickbut' => [
-                'image' => 'dickbut',
-                'name' => 'D**kbut',
-                'timeLimit' => 60,
-                'debuffs' => [
-                ],
-                'colors' => [
-                    ['hex' => '#000000'],
-                    ['hex' => '#ffffff'],
-                ],
-            ],
             'smiley' => [
                 'image' => 'smiley',
                 'name' => 'Smiley Face',
@@ -155,6 +144,17 @@ class LevelController extends Controller
                     ['hex' => '#28194e'],
                     ['hex' => '#748cce'],
                     ['hex' => '#000000'],
+                ],
+            ],
+            'dickbut' => [
+                'image' => 'dickbut',
+                'name' => 'D**kbut',
+                'timeLimit' => 60,
+                'debuffs' => [
+                ],
+                'colors' => [
+                    ['hex' => '#000000'],
+                    ['hex' => '#ffffff'],
                 ],
             ],
             'moon' => [
