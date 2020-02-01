@@ -17,48 +17,68 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="text-center">
-                        <h1 class="m-0" ng-show="$ctrl.score > 1000">Well done!</h1>
-                        <h1 class="m-0" ng-show="$ctrl.score < 1000 && $ctrl.score > -1000">Nice try!</h1>
-                        <h1 class="m-0" ng-show="$ctrl.score < -1000">Bad luck!</h1>
-                    </div>
-                    <div class="text-center">
-                        <em>You scored {{ $ctrl.finalScore }}!</em>
-                        <div class="progress" ng-show="$ctrl.submittingScore && !$ctrl.submittedScore">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                    <div ng-show="$ctrl.state == 'scores'">
+                        <div class="text-center">
+                            <h1 class="m-0" ng-show="$ctrl.score > 1000">Well done!</h1>
+                            <h1 class="m-0" ng-show="$ctrl.score < 1000 && $ctrl.score > -1000">Nice try!</h1>
+                            <h1 class="m-0" ng-show="$ctrl.score < -1000">Bad luck!</h1>
                         </div>
+                        <div class="text-center">
+                            <em>You scored {{ $ctrl.finalScore }}!</em>
+                            <div class="progress" ng-show="$ctrl.submittingScore && !$ctrl.submittedScore">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                            </div>
 
-                        <div class="input-group mb-3" ng-show="!$ctrl.submittingScore && !$ctrl.submittedScore">
-                            <input type="text" class="form-control mr-4" placeholder="Your name..." ng-model="$ctrl.playerName">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary g-btn-bg" ng-disabled="!$ctrl.playerName" type="button" ng-click="$ctrl.submitScore()">Submit score</button>
+                            <div class="input-group mb-3" ng-show="!$ctrl.submittingScore && !$ctrl.submittedScore">
+                                <input type="text" class="form-control mr-4" placeholder="Your name..." ng-model="$ctrl.playerName">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary g-btn-bg" ng-disabled="!$ctrl.playerName" type="button" ng-click="$ctrl.submitScore()">Submit score</button>
+                                </div>
                             </div>
                         </div>
+                        <div class="text-center" ng-show="$ctrl.highScores.length > 0">
+                            <h3>
+                                High scores
+                            </h3>
+                        </div>
+                        <div>
+                            <table class="table table-sm">
+                                <tr ng-repeat="highScore in $ctrl.highScores | orderBy: '-attributes.finalScore'" ng-class="{'table-success': highScore.attributes.new}">
+                                    <td style="width: 20%">{{ highScore.attributes.playerName }}</td>
+                                    <td style="width: 20%" class="g-number">{{ highScore.attributes.timeAgo }}</td>
+                                    <td style="width: 20%" class="g-number">
+                                        {{ $ctrl.getGrade(highScore) }}
+                                    </td style="width: 20%">
+                                    <td style="width: 20%" class="g-number">
+                                        {{ highScore.attributes.finalScore }}
+                                    </td style="width: 30%">
+                                    <td style="width: 10%" class="g-number">
+                                        <small class="text-success" ng-show="highScore.attributes.bonus > 0">+{{ highScore.attributes.bonus.toFixed() }}</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary g-btn-bg mr-4" ng-click="$ctrl.state = 'compare'">Compare</button>
+                            <button type="button" class="btn btn-primary g-btn-bg" onclick="location.reload()">Try again</button>
+                        </div>
                     </div>
-                    <div class="text-center" ng-show="$ctrl.highScores.length > 0">
-                        <h3>
-                            High scores
-                        </h3>
-                    </div>
-                    <div>
-                        <table class="table table-sm">
-                            <tr ng-repeat="highScore in $ctrl.highScores | orderBy: '-attributes.finalScore'" ng-class="{'table-success': highScore.attributes.new}">
-                                <td style="width: 20%">{{ highScore.attributes.playerName }}</td>
-                                <td style="width: 20%" class="g-number">{{ highScore.attributes.timeAgo }}</td>
-                                <td style="width: 20%" class="g-number">
-                                    {{ $ctrl.getGrade(highScore) }}
-                                </td style="width: 20%">
-                                <td style="width: 20%" class="g-number">
-                                    {{ highScore.attributes.finalScore }}
-                                </td style="width: 30%">
-                                <td style="width: 10%" class="g-number">
-                                    <small class="text-success" ng-show="highScore.attributes.bonus > 0">+{{ highScore.attributes.bonus.toFixed() }}</small>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="text-center">
-                        <button type="button" class="btn btn-primary g-btn-bg" onclick="location.reload()">Try again</button>
+
+                    <div ng-show="$ctrl.state == 'compare'">
+                        <div class="g-compare text-center">
+                            <h3>Compare your result</h3>
+                            <div class="img-comp-container">
+                                <div class="img-comp-img">
+                                    <canvas id="g-compare" width="400" height="400"></canvas>
+                                </div>
+                                <div class="img-comp-img img-comp-overlay">
+                                    <img ng-src="{{ $ctrl.level.attributes.actual }}" width="400" height="400" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary g-btn-bg" ng-click="$ctrl.state = 'scores'">Back</button>
+                        </div>
                     </div>
                 </div>
             </div>

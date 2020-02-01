@@ -5,8 +5,6 @@
 @import "common/mixins";
 @import "common/variables";
 
-@import "components/palette";
-
 @font-face {
     font-family: "digital-7";
     src: url("/fonts/digital-7-mono.ttf");
@@ -428,4 +426,55 @@ small {
 em {
     font-size: 40px;
     font-style: normal;
+}
+
+.g-compare {
+    position: relative;
+    #g-compare {
+        margin: auto;
+        width: 400px;
+        height: 400px;
+    }
+
+    img {
+        width: 400px;
+        height: 400px;
+    }
+
+    .img-comp-container {
+        position: relative;
+        margin-left: 117px;
+        margin-bottom: 1em;
+        width: 400px;
+        height: 400px;
+        outline: 1px solid #2196f3;
+    }
+
+    .img-comp-img {
+        position: absolute;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .img-comp-img img {
+        display: block;
+        vertical-align: middle;
+    }
+
+    .img-comp-slider {
+        position: absolute;
+        z-index: 9;
+        cursor: ew-resize;
+        /*set the appearance of the slider:*/
+        width: 60px;
+        height: 60px;
+        background-image: url(/images/btn_left_right.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .img-comp-overlay {
+        border-right: 1px solid #2196f3;
+    }
 }
