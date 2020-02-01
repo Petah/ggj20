@@ -1,7 +1,7 @@
 class AudioService {
-    constructor() {
+    constructor(DeviceService) {
         this._sounds = {};
-        this._disabled = true;
+        this._disabled = DeviceService.isPad;
     }
 
     play(sound, options = {}) {
@@ -62,6 +62,6 @@ class AudioService {
     }
 }
 
-AudioService.$inject = [];
+AudioService.$inject = ['DeviceService'];
 
 export default AudioService;

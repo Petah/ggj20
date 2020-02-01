@@ -1,6 +1,7 @@
 import './bootstrap';
 
 import AudioService from './services/audio';
+import DeviceService from './services/device';
 
 import Canvas from './components/canvas/canvas';
 import Game from './components/game/game';
@@ -15,6 +16,7 @@ try {
     const app = angular
         .module('GGJ2020', [])
         .service('AudioService', AudioService)
+        .service('DeviceService', DeviceService)
         .component('gGame', Game)
         .component('gCanvas', Canvas)
         .component('gPalette', Palette)

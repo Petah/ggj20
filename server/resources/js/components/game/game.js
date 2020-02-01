@@ -1,6 +1,4 @@
 import tmpl from './game.tmpl.html';
-import PaintBrush from '../../common/brushes/paint_brush';
-import colors from '../../common/colors';
 
 const GameController = function ($scope) {
     const $ctrl = this;
