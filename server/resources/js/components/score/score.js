@@ -8,9 +8,7 @@ const ScoreController = function (
     AudioService,
 ) {
     const $ctrl = this;
-    const tick = new Audio('/sounds/tick.mp3');
-    const tock = new Audio('/sounds/tock.mp3');
-    const gong = new Audio('/sounds/gong.mp3');
+    const audio = new AudioService();
 
     let interval = null;
 
@@ -22,7 +20,7 @@ const ScoreController = function (
         $ctrl.finalScore = formatScore($ctrl.realScore, $ctrl.bonus);
         $ctrl.timeRemaining = 0;
         $ctrl.timeUp = true;
-        gong.play();
+        audio.play("gong");
         $interval.cancel(interval);
         $('.g-score .modal').modal('show');
         $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
@@ -44,9 +42,9 @@ const ScoreController = function (
     let nextTick = null;
     const playTick = () => {
         if (lastTick) {
-            tick.play();
+            audio.play("tick");
         } else {
-            tock.play();
+            audio.play("tock");
         }
         lastTick = !lastTick;
         if ($ctrl.timeRemaining > 10) {

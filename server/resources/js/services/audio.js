@@ -1,5 +1,3 @@
-import {Howl, Howler} from 'howler';
-
 const AudioService = function() {
     return class AudioService {
         constructor() {
@@ -12,7 +10,7 @@ const AudioService = function() {
                 return;
             }
 
-            loadedSound.seek(0);
+            loadedSound.currentTime = 0;
             loadedSound.play();
         }
 
@@ -22,23 +20,18 @@ const AudioService = function() {
                 return;
             }
 
-            loadedSound.stop();
-            loadedSound.seek(0);
+            loadedSound.pause();
+            loadedSound.currentTime = 0;
         }
 
-        getSound(sound, options = {}) {
+        getSound(sound) {
             if (!this.sounds[sound]) {
                 const filename = AudioService.soundsList[sound];
                 if (!filename) {
                     return null;
                 }
 
-                this.sounds[sound] = new Howl({
-                    src: [filename],
-                    loop: false,
-                    volume: 0.8,
-                    ...options,
-                });
+                this.sounds[sound] = new Audio(filename);
             }
 
             return this.sounds[sound];
@@ -53,6 +46,7 @@ const AudioService = function() {
                 click: "/sounds/click.mp3",
                 paintBrush: "/sounds/paintbrush.mp3",
                 palette: "/sounds/palette.mp3",
+                gong: "/sounds/gong.mp3",
                 tick: "/sounds/tick.mp3",
                 tock: "/sounds/tock.mp3",
             };
