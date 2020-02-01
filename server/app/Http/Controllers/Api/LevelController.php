@@ -80,6 +80,22 @@ class LevelController extends Controller
                     ['hex' => '#ffffff'],
                 ],
             ],
+            'pikachu' => [
+                'image' => 'pikachu',
+                'name' => 'Pikachu',
+                'timeLimit' => 120,
+                'debuffs' => [],
+                'colors' => [
+                    ['hex' => '#f8d42d'],
+                    ['hex' => '#f62d13'],
+                    ['hex' => '#a81729'],
+                    ['hex' => '#700b0a'],
+                    ['hex' => '#e19722'],
+                    ['hex' => '#811e08'],
+                    ['hex' => '#000000'],
+                    ['hex' => '#ffffff'],
+                ],
+            ],
 
             'glass' => [
                 'image' => 'glass',
