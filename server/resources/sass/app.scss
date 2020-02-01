@@ -1,11 +1,11 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Internal Imports
-@import 'common/mixins';
-@import 'common/variables';
+@import "common/mixins";
+@import "common/variables";
 
-@import 'components/palette';
+@import "components/palette";
 
 // Globals
 * {
@@ -16,7 +16,7 @@
 html,
 body {
     color: $black;
-    font-family: 'Nunito', sans-serif;
+    font-family: "Nunito", sans-serif;
     font-size: 15px;
     font-weight: 200;
     margin: 0;
@@ -28,10 +28,18 @@ body {
     position: fixed;
 }
 
+.g-number {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" on;
+    white-space: nowrap;
+}
+
 .g-canvas {
+    padding: 2rem;
+
     .g-canvas-background {
-        background-image: url(/images/easel.png);
-        width: 909px;
+        width: 800px;
         min-height: 1035px;
         position: relative;
     }
@@ -39,18 +47,20 @@ body {
     .g-canvas-overlay {
         pointer-events: none;
         background-image: url(/images/easel.png);
-        width: 909px;
+        width: 800px;
         min-height: 1035px;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         position: absolute;
+        background-repeat: no-repeat;
+        background-size: 100% auto;
     }
 
     canvas {
-        margin-top: 116px;
-        margin-left: 83px;
+        margin-top: 102px;
+        margin-left: 75px;
     }
 }
 

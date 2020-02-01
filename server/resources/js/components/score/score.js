@@ -4,6 +4,7 @@ const ScoreController = function (
     $interval,
     $scope,
     $rootScope,
+    $http,
 ) {
     const $ctrl = this;
 
@@ -24,6 +25,12 @@ const ScoreController = function (
             if ($ctrl.timeRemaining <= 0) {
                 $ctrl.timeRemaining = 0;
                 $interval.cancel(interval);
+                $('.g-score .modal').modal('show');
+                $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
+                    $ctrl.highScores = response.data.data;
+                }).catch((error) => {
+                    console.error(error);
+                });
                 $rootScope.$broadcast('timeUp');
             }
 
@@ -44,12 +51,35 @@ const ScoreController = function (
         // $ctrl.score = ((comparison.attributes.score - 50) * 1000).toFixed();
     });
 
+    $ctrl.submitScore = () => {
+        $ctrl.submittingScore = true;
+        $http.post('/api/high-score/submit', {
+            data: {
+                attributes: {
+                    playerName: $ctrl.playerName,
+                    levelId: $ctrl.level.id,
+                    score: $ctrl.score,
+                },
+            },
+        }).then((response) => {
+            $ctrl.submittingScore = false;
+            $ctrl.submittedScore = true;
+            $ctrl.highScores = response.data.data;
+        }).catch((error) => {
+            $ctrl.submittingScore = false;
+            console.error(error);
+        });
+    };
+    $scope.$on('selectLevel', (event, level) => {
+        $ctrl.level = level;
+    });
 };
 
 ScoreController.$inject = [
     '$interval',
     '$scope',
     '$rootScope',
+    '$http',
 ];
 
 const Score = {

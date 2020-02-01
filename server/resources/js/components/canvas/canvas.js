@@ -2,9 +2,6 @@ const tmpl = require('./canvas.tmpl.html');
 
 const MOUSE_BUTTON_1 = 0b01;
 
-// 740
-// 740
-
 const CanvasController = function (
     $element,
     $scope,
@@ -49,7 +46,7 @@ const CanvasController = function (
     }
 
     const mouseMove = (event) => {
-        console.log('Canvas mouse move', $ctrl.drawing, event);
+        // console.log('Canvas mouse move', $ctrl.drawing, event);
         event.preventDefault();
         if (!$ctrl.drawing) {
             return;
@@ -57,7 +54,7 @@ const CanvasController = function (
 
 
         const point = getEventPosition(event);
-        console.log('Point', point, $ctrl.lastPoint)
+        // console.log('Point', point, $ctrl.lastPoint)
         if (!$ctrl.lastPoint) {
             $ctrl.lastPoint = point;
         }
@@ -74,9 +71,7 @@ const CanvasController = function (
 
             if (!compareDebounce) {
                 compareDebounce = $timeout(() => {
-                    compareDebounce = null;
-                    // console.log($ctrl.canvas.toDataURL());
-                    console.log('compare');
+                    console.log('Start compare');
 
                     $http
                         .post('/api/compare', {
@@ -95,12 +90,14 @@ const CanvasController = function (
                             },
                         })
                         .then(response => {
+                            compareDebounce = null;
                             $rootScope.$broadcast('comparison', response.data.data);
                         })
                         .catch(error => {
+                            compareDebounce = null;
                             console.error(error);
                         });
-                }, 100);
+                }, 200);
             }
         }
 
@@ -145,8 +142,8 @@ const CanvasController = function (
     };
 
     $ctrl.$onInit = () => {
-        $ctrl.height = 740;
-        $ctrl.width = 740;
+        $ctrl.height = 650;
+        $ctrl.width = 650;
 
         initCanvas();
     };

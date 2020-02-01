@@ -14,11 +14,11 @@ const LevelSelectController = function($http, $rootScope) {
 
     $ctrl.selectLevel = level => {
         console.log('Select level', level);
-        $('.modal').modal('hide');
+        $('.g-level-select .modal').modal('hide');
         $rootScope.$broadcast('selectLevel', level);
     };
 
-    $('.modal').modal('show');
+    $('.g-level-select .modal').modal('show');
 };
 
 LevelSelectController.$inject = [
