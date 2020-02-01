@@ -1,6 +1,7 @@
 class AudioService {
     constructor() {
         this._sounds = {};
+        this._disabled = true;
     }
 
     play(sound, options = {}) {
@@ -24,6 +25,10 @@ class AudioService {
     }
 
     getSound(sound) {
+        if (this.disabled) {
+            return;
+        }
+
         if (!this.sounds[sound]) {
             const filename = AudioService.soundsList[sound];
             if (!filename) {
@@ -34,6 +39,10 @@ class AudioService {
         }
 
         return this.sounds[sound];
+    }
+
+    get disabled() {
+        return this._disabled;
     }
 
     get sounds() {
@@ -47,8 +56,8 @@ class AudioService {
             paintBrush: "/sounds/paintbrush.mp3",
             palette: "/sounds/palette.mp3",
             gong: "/sounds/gong.mp3",
-            tick: "/sounds/tick.wav",
-            tock: "/sounds/tock.wav",
+            tick: "/sounds/tick.mp3",
+            tock: "/sounds/tock.mp3",
         };
     }
 }
