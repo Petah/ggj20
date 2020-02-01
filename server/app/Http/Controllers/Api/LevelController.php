@@ -35,7 +35,7 @@ class LevelController extends Controller
 
     public static function getImages()
     {
-        return [
+        $images = [
             'smiley' => [
                 'image' => 'smiley',
                 'name' => 'Smiley Face',
@@ -148,7 +148,7 @@ class LevelController extends Controller
             ],
             'fry' => [
                 'image' => 'fry',
-                'name' => 'Fry',
+                'name' => 'Suspicious fry',
                 'timeLimit' => 120,
                 'debuffs' => [],
                 'colors' => [
@@ -167,8 +167,7 @@ class LevelController extends Controller
                 'image' => 'dickbut',
                 'name' => 'D**kbut',
                 'timeLimit' => 60,
-                'debuffs' => [
-                ],
+                'debuffs' => [],
                 'colors' => [
                     ['hex' => '#000000'],
                     ['hex' => '#ffffff'],
@@ -209,5 +208,9 @@ class LevelController extends Controller
                 ],
             ],
         ];
+        uksort($images, function () {
+            return rand() > rand();
+        });
+        return $images;
     }
 }

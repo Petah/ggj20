@@ -88,16 +88,16 @@ const CanvasController = function (
                 compareDebounce = $timeout(() => {
                     console.log('Start compare');
 
-                    // const resizedCanvas = document.createElement("canvas");
-                    // const resizedContext = resizedCanvas.getContext("2d");
+                    const resizedCanvas = document.createElement("canvas");
+                    const resizedContext = resizedCanvas.getContext("2d");
 
-                    // resizedCanvas.height = "200";
-                    // resizedCanvas.width = "200";
+                    resizedCanvas.height = "100";
+                    resizedCanvas.width = "100";
 
-                    // resizedContext.drawImage($ctrl.canvas, 0, 0, 200, 200);
-                    // // $('body').prepend(resizedCanvas);
-                    // const dataUrl = resizedCanvas.toDataURL('image/png');
-                    const dataUrl = $ctrl.canvas.toDataURL('image/png');
+                    resizedContext.drawImage($ctrl.canvas, 0, 0, 100, 100);
+                    // $('body').prepend(resizedCanvas);
+                    const dataUrl = resizedCanvas.toDataURL('image/png');
+                    // const dataUrl = $ctrl.canvas.toDataURL('image/png');
 
                     $http
                         .post('/api/compare', {
