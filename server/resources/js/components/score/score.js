@@ -11,6 +11,10 @@ const ScoreController = function (
     let interval = null;
 
     const timeUp = () => {
+        $ctrl.bonus = 0;
+        if ($ctrl.timeRemaining >= 2) {
+            $ctrl.bonus = 10000 * $ctrl.timeRemaining / $ctrl.levelTime
+        }
         $ctrl.timeRemaining = 0;
         $ctrl.timeUp = true;
         $interval.cancel(interval);
@@ -25,7 +29,7 @@ const ScoreController = function (
 
     const mapHighScores = (highScores) => {
         return highScores.map((highScore) => {
-            highScore.attributes.score = formatScore(highScore.attributes.score);
+            highScore.attributes.finalScore = formatScore(highScore.attributes.score, highScore.attributes.bonus);
             return highScore;
         });
     }
@@ -70,11 +74,13 @@ const ScoreController = function (
         return minutes + ':' + seconds;
     };
 
-    const formatScore = (score) => {
+    const formatScore = (score, bonus) => {
+        score = parseFloat(score || 0);
+        bonus = parseFloat(bonus || 0);
         if (score < 0) {
             return (score * 100).toFixed();
         }
-        return (score * 1000).toFixed();
+        return (score * 1000 + bonus).toFixed();
     };
 
     $scope.$on('comparison', (event, comparison) => {
@@ -91,6 +97,7 @@ const ScoreController = function (
                     playerName: $ctrl.playerName,
                     levelId: $ctrl.level.id,
                     score: $ctrl.realScore,
+                    bonus: $ctrl.bonus,
                 },
             },
         }).then((response) => {
@@ -122,6 +129,26 @@ const ScoreController = function (
 
     $ctrl.stop = () => {
         timeUp();
+    };
+
+    $ctrl.getGrade = (highScore) => {
+        const score = formatScore(highScore.attributes.score, highScore.attributes.bonus);
+        if (score > 95000) {
+            return 'A+';
+        }
+        if (score > 90000) {
+            return 'A';
+        }
+        if (score > 75000) {
+            return 'B';
+        }
+        if (score > 50000) {
+            return 'C';
+        }
+        if (score > 25000) {
+            return 'D';
+        }
+        return 'F';
     };
 
     $scope.$on('selectLevel', (event, level) => {

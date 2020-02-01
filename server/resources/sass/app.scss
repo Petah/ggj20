@@ -386,7 +386,7 @@ g-score {
     background-repeat: no-repeat;
     background-size: contain;
     background-color: transparent;
-    padding: 30px 60px;
+    padding: 20px 60px;
     min-height: 700px;
     border: 0;
 }
@@ -406,10 +406,29 @@ g-score {
     background-color: transparent;
     border: 0;
     font-size: 22px;
+    outline: 0 !important;
+    box-shadow: none !important;
 
     &:hover {
         background-color: transparent;
         border: 0;
         opacity: 0.9;
     }
+
+    &:focus,
+    &:disabled {
+        border: 0 !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+}
+
+small {
+    font-size: 70%;
+}
+
+em {
+    font-size: 40px;
+    font-style: normal;
 }

@@ -10,5 +10,6 @@ class HighScore extends Model
         'level_id',
         'player_name',
         'score',
+        'bonus',
     ];
 }

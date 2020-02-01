@@ -14,6 +14,7 @@ class HighScoreController extends Controller
             'level_id' => $request->input('data.attributes.levelId'),
             'player_name' => $request->input('data.attributes.playerName'),
             'score' => $request->input('data.attributes.score'),
+            'bonus' => $request->input('data.attributes.bonus'),
         ]);
         return $this->getHighScores($request->input('data.attributes.levelId'));
     }
@@ -34,7 +35,8 @@ class HighScoreController extends Controller
                     'attributes' => [
                         'levelId' => $highScore->level_id,
                         'playerName' => $highScore->player_name,
-                        'score' => $highScore->score,
+                        'score' => (float) $highScore->score,
+                        'bonus' => (float) $highScore->bonus,
                         'timeAgo' => $highScore->created_at->diffForHumans(),
                     ],
                 ];
