@@ -1,5 +1,7 @@
 <div class="g-palette" ng-show="$ctrl.level">
     <div class="g-palette-background">
+        <div class="g-palette-brush-thin" ng-click="$ctrl.changeBrush('thin')" ng-class="{'g-palette-brush-selected': $ctrl.brush == 'thin'}"></div>
+        <div class="g-palette-brush-thick" ng-click="$ctrl.changeBrush('thick')" ng-class="{'g-palette-brush-selected': $ctrl.brush == 'thick'}"></div>
         <div class="g-palette-colors">
             <button ng-repeat="color in $ctrl.colors" class="btn" type="button" ng-style="{ backgroundColor: color.hex }" ng-click="$ctrl.changeColor(color)" ng-class="{'g-palette-selected': $ctrl.color == color}"></button>
         </div>

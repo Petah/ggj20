@@ -6,6 +6,6 @@
             ng-attr-height="{{ $ctrl.height }}"
         ></canvas>
         <div class="g-canvas-overlay"></div>
-        <div class="g-canvas-brush"></div>
+        <div class="g-canvas-brush" ng-style="{width: $ctrl.getBrushSize(), height: $ctrl.getBrushSize()}"></div>
     </div>
 </div>

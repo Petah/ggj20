@@ -16,6 +16,7 @@ const CanvasController = function (
     $ctrl.drawing = false;
 
     $ctrl.color = null;
+    $ctrl.brush = 'thick';
     $ctrl.lastPoint = null;
 
 
@@ -45,6 +46,11 @@ const CanvasController = function (
         return [x, y];
     }
 
+    $ctrl.getBrushSize = () => {
+        console.log($ctrl.brush);
+        return $ctrl.brush == 'thick' ? 25 : 5;
+    };
+
     const mouseMove = (event) => {
         // console.log('Canvas mouse move', $ctrl.drawing, event);
         event.preventDefault();
@@ -56,10 +62,10 @@ const CanvasController = function (
             $ctrl.lastPoint = point;
         }
 
-        $('.g-canvas-brush').css('left', point[0] + 75 - (25 / 2));
-        $('.g-canvas-brush').css('top', point[1] + 102 - (25 / 2));
+        $('.g-canvas-brush').css('left', point[0] + 75 - ($ctrl.getBrushSize() / 2));
+        $('.g-canvas-brush').css('top', point[1] + 102 - ($ctrl.getBrushSize() / 2));
         // $ctrl.context.beginPath();
-        // $ctrl.context.arc(point[0], point[1], 25, 0, 2 * Math.PI);
+        // $ctrl.context.arc(point[0], point[1], $ctrl.getBrushSize(), 0, 2 * Math.PI);
         // $ctrl.context.stroke();
         // $ctrl.context.endPath();
 
@@ -71,7 +77,7 @@ const CanvasController = function (
             $ctrl.context.beginPath();
             $ctrl.context.moveTo($ctrl.lastPoint[0], $ctrl.lastPoint[1]);
             $ctrl.context.strokeStyle = $ctrl.color.hex;
-            $ctrl.context.lineWidth = 25;
+            $ctrl.context.lineWidth = $ctrl.getBrushSize();
             $ctrl.context.lineCap = 'round';
             $ctrl.context.lineJoin = 'round';
             $ctrl.context.lineTo(point[0], point[1]);
@@ -191,6 +197,10 @@ const CanvasController = function (
         $ctrl.color = color;
     });
 
+    $scope.$on('changeBrush', (event, brush) => {
+        $ctrl.brush = brush;
+    });
+
     $scope.$on('timeUp', (event, level) => {
         $ctrl.level = null;
     });
@@ -207,11 +217,6 @@ CanvasController.$inject = [
 const Canvas = {
     template: tmpl,
     controller: CanvasController,
-    bindings: {
-        brush: '<?gBrush',
-        height: '<?gHeight',
-        width: '<?gWidth',
-    },
 };
 
 export default Canvas;

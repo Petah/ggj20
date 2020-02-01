@@ -4,11 +4,18 @@ const PaletteController = function($scope, $rootScope) {
     const $ctrl = this;
     $ctrl.colors = [];
     $ctrl.color = null;
+    $ctrl.brush = 'thick';
 
     $ctrl.changeColor = color => {
         console.log('Change color', color);
         $ctrl.color = color;
         $rootScope.$broadcast('changeColor', color);
+    };
+
+    $ctrl.changeBrush = brush => {
+        console.log('Change brush', brush);
+        $ctrl.brush = brush;
+        $rootScope.$broadcast('changeBrush', brush);
     };
 
     $scope.$on('selectLevel', (event, level) => {

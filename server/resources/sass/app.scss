@@ -137,7 +137,7 @@ g-palette {
         width: 478px;
         height: 355px;
         padding-top: 29px;
-        padding-left: 147px;
+        padding-left: 160px;
 
         .g-palette-colors {
             display: grid;
@@ -146,7 +146,7 @@ g-palette {
             grid-column-gap: 0px;
             grid-row-gap: 19px;
             text-align: center;
-            width: 330px;
+            width: 310px;
 
             .btn {
                 width: 56px;
@@ -165,6 +165,38 @@ g-palette {
     .btn:focus {
         outline: 0;
         box-shadow: none;
+    }
+
+    .g-palette-brush-thin {
+        background-image: url(/images/brush_small.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 43px;
+        height: 284px;
+        position: absolute;
+        left: 110px;
+        top: 85px;
+        cursor: pointer;
+
+        &.g-palette-brush-selected {
+            background-image: url(/images/brush_small_selected.png);
+        }
+    }
+
+    .g-palette-brush-thick {
+        background-image: url(/images/brush_big.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 43px;
+        height: 284px;
+        position: absolute;
+        left: 60px;
+        top: 85px;
+        cursor: pointer;
+
+        &.g-palette-brush-selected {
+            background-image: url(/images/brush_big_selected.png);
+        }
     }
 }
 
