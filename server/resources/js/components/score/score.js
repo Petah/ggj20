@@ -10,6 +10,19 @@ const ScoreController = function (
 
     let interval = null;
 
+    const timeUp = () => {
+        $ctrl.timeRemaining = 0;
+        $ctrl.timeUp = true;
+        $interval.cancel(interval);
+        $('.g-score .modal').modal('show');
+        $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
+            $ctrl.highScores = response.data.data;
+        }).catch((error) => {
+            console.error(error);
+        });
+        $rootScope.$broadcast('timeUp');
+    };
+
     $scope.$on('selectLevel', (event, level) => {
         $ctrl.levelTime = level.attributes.timeLimit;
         $ctrl.timeRemaining = $ctrl.levelTime;
@@ -24,16 +37,7 @@ const ScoreController = function (
             $ctrl.timeRemaining = ($ctrl.levelTime - ((new Date().getTime() - $ctrl.startTime) / 1000)).toFixed(2);
             $ctrl.timeRemainingFormatted = formatTimeRemaining($ctrl.timeRemaining);
             if ($ctrl.timeRemaining <= 0) {
-                $ctrl.timeRemaining = 0;
-                $ctrl.timeUp = true;
-                $interval.cancel(interval);
-                $('.g-score .modal').modal('show');
-                $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
-                    $ctrl.highScores = response.data.data;
-                }).catch((error) => {
-                    console.error(error);
-                });
-                $rootScope.$broadcast('timeUp');
+                timeUp();
             }
 
             let i = level.attributes.debuffs.length
@@ -108,6 +112,10 @@ const ScoreController = function (
         }
         return 'rotate(' + neg + 'deg)';
     }
+
+    $ctrl.stop = () => {
+        timeUp();
+    };
 
     $scope.$on('selectLevel', (event, level) => {
         $ctrl.level = level;

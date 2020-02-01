@@ -8,7 +8,7 @@
         <div class="g-score-gauge">
             <div class="g-score-gauge-arrow" ng-style="{transform: $ctrl.getArrowRotation()}">
             </div>
-            <div class="g-score-gauge-stop">
+            <div class="g-score-gauge-stop" ng-click="$ctrl.stop()">
             </div>
         </div>
     </div>
@@ -45,12 +45,7 @@
                             </tr>
                         </table>
                     </div>
-                    <br/>
-                    <br/>
-                    <p>
-                        There is more paintings to repair, go back to the level select to try again.
-                    </p>
-                    <button type="button" class="btn btn-primary" onclick="location.reload()">Select level</button>
+                    <button type="button" class="btn btn-primary" onclick="location.reload()">Try again</button>
                 </div>
             </div>
             <img draggable="false" class="g-clippy" src="/images/clippy.png" />

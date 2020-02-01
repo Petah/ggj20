@@ -90,7 +90,7 @@ const CanvasController = function (
                     // resizedContext.drawImage($ctrl.canvas, 0, 0, 200, 200);
                     // // $('body').prepend(resizedCanvas);
                     // const dataUrl = resizedCanvas.toDataURL('image/png');
-                    const dataUrl = $ctrl.canvas.toDataURL('image/png');
+                    const dataUrl = $ctrl.canvas.toDataURL('image/jpeg');
 
                     $http
                         .post('/api/compare', {

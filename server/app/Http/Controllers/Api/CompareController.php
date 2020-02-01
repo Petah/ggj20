@@ -10,7 +10,7 @@ class CompareController extends Controller
 {
     public function compare(Request $request)
     {
-        $imageBase64 = str_replace('data:image/png;base64,', '', $request->input('data.attributes.image'));
+        $imageBase64 = str_replace(['data:image/png;base64,', 'data:image/jpeg;base64,'], '', $request->input('data.attributes.image'));
         $imageBinary = base64_decode($imageBase64);
         $image = imagecreatefromstring($imageBinary);
         $level = LevelController::getImages()[$request->input('data.relationships.level.data.id')];
@@ -37,7 +37,7 @@ class CompareController extends Controller
 
         //-------------------------------------------------------------------------
         // configuration
-        $blurSize = 0; 			// 2: looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
+        $blurSize = 2; 			// 2: looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
         $resizedWidth = 100;
         $resizedHeight = 100;
         //-------------------------------------------------------------------------
