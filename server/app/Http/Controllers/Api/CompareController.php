@@ -40,6 +40,7 @@ class CompareController extends Controller
         $blurSize = 2; 			// 2: looking for 5x5 pixels: (blurSize * 2 + 1) x (blurSize * 2 + 1)
         $resizedWidth = 100;
         $resizedHeight = 100;
+        $colorDiffAllowance = 24;  // 0-255
         //-------------------------------------------------------------------------
 
         $repairImage = imagecreatefromstring(file_get_contents($repairImageName));
@@ -179,6 +180,30 @@ class CompareController extends Controller
                 $userRed /= $numberOfBlurPixels;
                 $userGreen /= $numberOfBlurPixels;
                 $userBlue /= $numberOfBlurPixels;
+
+                //--------------------------------------------------------
+                $diffRed = $repairRed - $userRed;
+                $diffGreen = $repairGreen - $userGreen;
+                $diffBlue = $repairBlue - $userBlue;
+                if ($diffRed < 0.0) {
+                    $diffRed *= -1.0;
+                }
+                if ($diffGreen < 0.0) {
+                    $diffGreen *= -1.0;
+                }
+                if ($diffBlue < 0.0) {
+                    $diffBlue *= -1.0;
+                }
+                if ($diffRed <= $colorDiffAllowance) {
+                    $userRed = $repairRed;
+                }
+                if ($diffGreen <= $colorDiffAllowance) {
+                    $userGreen = $repairGreen;
+                }
+                if ($diffBlue <= $colorDiffAllowance) {
+                    $userBlue = $repairBlue;
+                }
+                //--------------------------------------------------------
 
                 // get color from actualImage
                 $actualRed = 0.0;
