@@ -10,7 +10,13 @@ class AudioService {
             return;
         }
 
+        if (loadedSound.currentTime > 0 && !options.force) {
+            return;
+        }
+
         loadedSound.currentTime = 0;
+        loadedSound.loop = options.loop || false;
+        loadedSound.volume = options.volume || 1;
         loadedSound.play();
     }
 

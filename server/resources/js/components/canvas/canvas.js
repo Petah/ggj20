@@ -8,6 +8,7 @@ const CanvasController = function (
     $rootScope,
     $timeout,
     $http,
+    AudioService,
 ) {
     const $ctrl = this;
 
@@ -19,10 +20,10 @@ const CanvasController = function (
     $ctrl.brush = 'thick';
     $ctrl.lastPoint = null;
 
-
     const endStroke = (event) => {
         console.log('Canvas end stroke');
         event.preventDefault();
+        AudioService.stop("paintBrush");
         $ctrl.drawing = false;
     };
 
@@ -73,6 +74,7 @@ const CanvasController = function (
         }
 
         if ($ctrl.color) {
+            AudioService.play("paintBrush", { loop: true });
             $ctrl.context.beginPath();
             $ctrl.context.moveTo($ctrl.lastPoint[0], $ctrl.lastPoint[1]);
             $ctrl.context.strokeStyle = $ctrl.color.hex;
@@ -211,6 +213,7 @@ CanvasController.$inject = [
     '$rootScope',
     '$timeout',
     '$http',
+    'AudioService',
 ];
 
 const Canvas = {

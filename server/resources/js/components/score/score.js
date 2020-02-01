@@ -41,9 +41,9 @@ const ScoreController = function (
     let nextTick = null;
     const playTick = () => {
         if (lastTick) {
-            AudioService.play("tick");
+            AudioService.play("tick", { force: true, volume: 0.5 });
         } else {
-            AudioService.play("tock");
+            AudioService.play("tock", { force: true, volume: 0.5 });
         }
         lastTick = !lastTick;
         if ($ctrl.timeRemaining > 10) {
