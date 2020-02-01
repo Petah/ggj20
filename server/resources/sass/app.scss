@@ -178,16 +178,16 @@ g-palette {
         background-size: contain;
         cursor: pointer;
 
-        &--thin {
+        &-thin {
             background-image: url(/images/brush_small.png);
-            left: 105px;
+            left: 101px;
 
             &.g-palette-brush--selected {
                 background-image: url(/images/brush_small_selected.png);
             }
         }
 
-        &--thick {
+        &-thick {
             background-image: url(/images/brush_big.png);
             left: 50px;
 
