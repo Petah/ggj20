@@ -13,6 +13,7 @@ const ScoreController = function (
     $ctrl.state = 'scores';
 
     let interval = null;
+    let isWarningSoundPlayed = false;
 
     const timeUp = () => {
         $ctrl.bonus = 0;
@@ -129,6 +130,11 @@ const ScoreController = function (
         console.log('Comparison', comparison);
         $ctrl.realScore = comparison.attributes.score;
         $ctrl.score = formatScore(comparison.attributes.score);
+
+        if (isWarningSoundPlayed == false && $ctrl.realScore <= -99) {
+            isWarningSoundPlayed = true;
+            AudioService.play("winston", { volume: 0.5 });
+        }
     });
 
     $ctrl.submitScore = () => {

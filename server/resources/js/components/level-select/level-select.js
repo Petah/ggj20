@@ -29,6 +29,7 @@ const LevelSelectController = function ($http, $rootScope, AudioService) {
     };
 
     $ctrl.nextLevel = () => {
+        AudioService.play("scroll");
         $ctrl.levelIndex++;
         if ($ctrl.levelIndex >= $ctrl.levels.length) {
             $ctrl.levelIndex = 0;
@@ -36,6 +37,7 @@ const LevelSelectController = function ($http, $rootScope, AudioService) {
     };
 
     $ctrl.prevLevel = () => {
+        AudioService.play("scroll");
         $ctrl.levelIndex--;
         if ($ctrl.levelIndex < 0) {
             $ctrl.levelIndex = $ctrl.levels.length - 1;

@@ -68,6 +68,8 @@ class AudioService {
             gong: "/sounds/gong.mp3",
             tick: "/sounds/tick.mp3",
             tock: "/sounds/tock.mp3",
+            winston: "/sounds/winston.mp3",
+            scroll: "/sounds/scroll.mp3",
         };
     }
 }
