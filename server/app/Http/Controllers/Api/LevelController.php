@@ -11,12 +11,14 @@ class LevelController extends Controller
         $levels = [];
         foreach (static::getImages() as $id => $data) {
             $repairImage = 'images/levels/' . $data['image'] . '-repair.png';
+            $actualImage = 'images/levels/' . $data['image'] . '-actual.png';
             [$width, $height] = getimagesize(public_path($repairImage));
             $levels[] = [
                 'id' => $id,
                 'type' => 'Level',
                 'attributes' => array_merge($data, [
                     'url' => $repairImage,
+                    'actual' => $actualImage,
                     'width' => $width,
                     'height' => $height,
                 ]),

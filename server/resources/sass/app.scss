@@ -1,5 +1,5 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Concert+One&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bubblegum+Sans|Chewy&display=swap");
 
 // Internal Imports
 @import "common/mixins";
@@ -20,8 +20,8 @@
 html,
 body {
     color: $black;
-    font-family: "Concert One", cursive;
-    font-size: 15px;
+    font-family: "Bubblegum Sans", cursive;
+    font-size: 20px;
     font-weight: 200;
     margin: 0;
     padding: 0;
@@ -34,6 +34,15 @@ body {
     background-image: url(/images/wall.png);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Chewy", cursive;
+}
+
 .g-number {
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -41,8 +50,31 @@ body {
     white-space: nowrap;
 }
 
+.g-game {
+    .g-game-wrapper {
+        display: flex;
+
+        .g-game-left {
+            position: relative;
+            width: 520px;
+            height: 100vh;
+        }
+        .g-game-right {
+            position: relative;
+            height: 100vh;
+            width: calc(100vw - 520px);
+            display: flex;
+        }
+    }
+}
+
+g-canvas {
+    display: block;
+    margin: auto;
+}
+
 .g-canvas {
-    padding: 2rem;
+    padding: 2em;
     cursor: url(/images/brush-small.png) 0 32, auto;
 
     .g-canvas-background {
@@ -81,6 +113,12 @@ body {
         pointer-events: none;
         cursor: url(/images/brush-small.png) 0 32, auto;
     }
+}
+
+g-palette {
+    bottom: 2em;
+    display: block;
+    position: absolute;
 }
 
 .g-palette {
@@ -129,13 +167,33 @@ body {
     .g-level-select-level {
         cursor: pointer;
         text-align: center;
-        border: 1px solid #aaa;
+        flex: 1;
+        img {
+            max-width: 200px;
+        }
+    }
+
+    .g-level-select-arrows {
+        display: flex;
+        align-items: center;
+        margin-top: 4em;
+    }
+
+    .g-level-select-arrow {
+        cursor: pointer;
+        padding: 1em;
     }
 }
 
+g-score {
+    width: 520px;
+}
+
 .g-score {
-    margin-top: 2rem;
+    margin-top: 2em;
+    width: 520px;
     .g-score-clock {
+        display: inline-block;
         position: relative;
         background-image: url(/images/clock.png);
         background-repeat: no-repeat;
@@ -154,7 +212,23 @@ body {
             left: 92px;
             font-size: 100px;
             font-family: "digital-7", sans-serif;
-            color: #B63A3F;
+            color: #b63a3f;
         }
     }
+}
+
+.modal-content {
+    background-image: url(/images/modal.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    padding: 30px 60px;
+    min-height: 700px;
+    border: 0;
+}
+
+.g-clippy {
+    position: absolute;
+    right: -50px;
+    bottom: -100px;
 }
