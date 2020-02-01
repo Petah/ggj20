@@ -96,7 +96,6 @@ class LevelController extends Controller
                     ['hex' => '#ffffff'],
                 ],
             ],
-
             'glass' => [
                 'image' => 'glass',
                 'name' => 'Stained Glass',
@@ -112,6 +111,19 @@ class LevelController extends Controller
                     ['hex' => '#93c47d'],
                     ['hex' => '#d9ead3'],
                     ['hex' => '#000000'],
+                ],
+            ],
+            'pingu' => [
+                'image' => 'pingu',
+                'name' => 'Pingu',
+                'timeLimit' => 180,
+                'debuffs' => [],
+                'colors' => [
+                    ['hex' => '#212239'],
+                    ['hex' => '#bd2e39'],
+                    ['hex' => '#f0b958'],
+                    ['hex' => '#edded1'],
+                    ['hex' => '#c9c3c3'],
                 ],
             ],
             'skeletor' => [
