@@ -146,6 +146,23 @@ class LevelController extends Controller
                     ['hex' => '#000000'],
                 ],
             ],
+            'fry' => [
+                'image' => 'fry',
+                'name' => 'Fry',
+                'timeLimit' => 120,
+                'debuffs' => [],
+                'colors' => [
+                    ['hex' => '#ffb590'],
+                    ['hex' => '#ed7119'],
+                    ['hex' => '#ad272b'],
+                    ['hex' => '#446181'],
+                    ['hex' => '#3c4e69'],
+                    ['hex' => '#2f5e6f'],
+                    ['hex' => '#193236'],
+                    ['hex' => '#ffffff'],
+                    ['hex' => '#000000'],
+                ],
+            ],
             'dickbut' => [
                 'image' => 'dickbut',
                 'name' => 'D**kbut',
