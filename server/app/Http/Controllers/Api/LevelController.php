@@ -35,7 +35,7 @@ class LevelController extends Controller
             'smiley' => [
                 'image' => 'smiley',
                 'name' => 'Smiley Face',
-                'timeLimit' => 5,
+                'timeLimit' => 60,
                 'debuffs' => [
                     [
                         'startTime' => 10,
@@ -83,7 +83,7 @@ class LevelController extends Controller
             'glass' => [
                 'image' => 'glass',
                 'name' => 'Stained Glass',
-                'timeLimit' => 300,
+                'timeLimit' => 90,
                 'debuffs' => [],
                 'colors' => [
                     ['hex' => '#ff0000'],
@@ -100,7 +100,7 @@ class LevelController extends Controller
             'skeletor' => [
                 'image' => 'skeletor',
                 'name' => 'Skeletor',
-                'timeLimit' => 300,
+                'timeLimit' => 120,
                 'debuffs' => [],
                 'colors' => [
                     ['hex' => '#f5c358'],
@@ -117,7 +117,7 @@ class LevelController extends Controller
             'moon' => [
                 'image' => 'moon',
                 'name' => 'Moon',
-                'timeLimit' => 300,
+                'timeLimit' => 60,
                 'debuffs' => [],
                 'colors' => [
                     ['hex' => '#d7cbca'],
@@ -129,11 +129,23 @@ class LevelController extends Controller
             'nz' => [
                 'image' => 'nz',
                 'name' => 'New Zealand',
-                'timeLimit' => 300,
+                'timeLimit' => 60,
                 'debuffs' => [],
                 'colors' => [
                     ['hex' => '#657151'],
                     ['hex' => '#172642'],   
+                ],
+            ],
+            'monalisa' => [
+                'image' => 'monalisa',
+                'name' => 'Mona Lisa',
+                'timeLimit' => 120,
+                'debuffs' => [],
+                'colors' => [
+                    ['hex' => '#bd8545'],
+                    ['hex' => '#5f4b31'],
+                    ['hex' => '#837e5d'],
+                    ['hex' => '#2d1f15'],
                 ],
             ],
         ];
