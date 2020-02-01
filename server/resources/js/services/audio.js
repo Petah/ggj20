@@ -1,25 +1,29 @@
+import {Howl, Howler} from 'howler';
+
 const AudioService = function() {
     return class AudioService {
         constructor() {
             this._sounds = {};
         }
 
-        play(sound, playbackRate = 1.0, loop = false, force = false) {
+        play(sound, options = {}) {
+            const loadedSound = this.getSound(sound, options);
+            if (!loadedSound) {
+                return;
+            }
+
+            loadedSound.seek(0);
+            loadedSound.play();
+        }
+
+        stop(sound) {
             const loadedSound = this.getSound(sound);
             if (!loadedSound) {
                 return;
             }
 
-            if (
-                !force
-                && (loadedSound.currentTime > 0 || loadedSound.ended)
-            ) {
-                return;
-            }
-
-            loadedSound.playbackRate = playbackRate;
-            loadedSound.loop = loop;
-            loadedSound.play();
+            loadedSound.stop();
+            loadedSound.seek(0);
         }
 
         changePlaybackRate(sound, playbackRate = 1.0) {
@@ -28,32 +32,27 @@ const AudioService = function() {
                 return;
             }
 
-            if (loadedSound.playbackRate === playbackRate) {
+            if (loadedSound.rate() === playbackRate) {
                 return;
             }
 
-            loadedSound.playbackRate = playbackRate;
+            loadedSound.rate(playbackRate);
             loadedSound.play();
         }
 
-        stop(sound, loop = false, force = false) {
-            const loadedSound = this.getSound(sound);
-            if (!loadedSound) {
-                return;
-            }
-
-            loadedSound.pause();
-            loadedSound.currentTime = 0;
-        }
-
-        getSound(sound) {
+        getSound(sound, options = {}) {
             if (!this.sounds[sound]) {
                 const filename = AudioService.soundsList[sound];
                 if (!filename) {
                     return null;
                 }
 
-                this.sounds[sound] = new Audio(filename);
+                this.sounds[sound] = new Howl({
+                    src: [filename],
+                    loop: false,
+                    volume: 0.8,
+                    ...options,
+                });
             }
 
             return this.sounds[sound];

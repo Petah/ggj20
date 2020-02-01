@@ -16,6 +16,11 @@ const LevelSelectController = function ($http, $rootScope, AudioService) {
             console.error(error);
         });
 
+    $ctrl.showLevelSelect = () => {
+        audio.play("click");
+        $ctrl.state = 'level-select';
+    };
+
     $ctrl.selectLevel = level => {
         console.log('Select level', level);
         $('.g-level-select .modal').modal('hide');

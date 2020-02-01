@@ -42,7 +42,7 @@ const ScoreController = function (
         $ctrl.timeRemaining = $ctrl.levelTime;
         $ctrl.startTime = new Date().getTime();
         $ctrl.score = 0;
-        audio.play("tickTock", 1.0, true);
+        audio.play("tickTock", { loop: true });
 
         // Start timer
         if (interval) {
@@ -51,12 +51,6 @@ const ScoreController = function (
         interval = $interval(() => {
             $ctrl.timeRemaining = ($ctrl.levelTime - ((new Date().getTime() - $ctrl.startTime) / 1000)).toFixed(2);
             $ctrl.timeRemainingFormatted = formatTimeRemaining($ctrl.timeRemaining);
-            if ($ctrl.timeRemaining <= 30) {
-                audio.changePlaybackRate("tickTock", 2.0);
-            }
-            if ($ctrl.timeRemaining <= 10) {
-                audio.changePlaybackRate("tickTock", 3.0);
-            }
             if ($ctrl.timeRemaining <= 0) {
                 timeUp();
             }
