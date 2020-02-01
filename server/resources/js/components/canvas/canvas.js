@@ -47,7 +47,6 @@ const CanvasController = function (
     }
 
     $ctrl.getBrushSize = () => {
-        console.log($ctrl.brush);
         return $ctrl.brush == 'thick' ? 25 : 5;
     };
 
