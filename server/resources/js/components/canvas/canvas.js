@@ -61,6 +61,11 @@ const CanvasController = function (
         if (!$ctrl.lastPoint) {
             $ctrl.lastPoint = point;
         }
+        if ($ctrl.lastPoint[0] === point[0] && $ctrl.lastPoint[1] === point[1]) {
+            AudioService.stop("paintBrush");
+        } else {
+            AudioService.play("paintBrush", { loop: true, volume: 1.0 });
+        }
 
         $('.g-canvas-brush').css('left', point[0] + 75 - ($ctrl.getBrushSize() / 2));
         $('.g-canvas-brush').css('top', point[1] + 102 - ($ctrl.getBrushSize() / 2));
@@ -74,7 +79,6 @@ const CanvasController = function (
         }
 
         if ($ctrl.color) {
-            AudioService.play("paintBrush", { loop: true });
             $ctrl.context.beginPath();
             $ctrl.context.moveTo($ctrl.lastPoint[0], $ctrl.lastPoint[1]);
             $ctrl.context.strokeStyle = $ctrl.color.hex;

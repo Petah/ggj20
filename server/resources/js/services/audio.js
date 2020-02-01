@@ -10,6 +10,10 @@ class AudioService {
             return;
         }
 
+        if (loadedSound.ended) {
+            loadedSound.currentTime = 0;
+        }
+
         if (loadedSound.currentTime > 0 && !options.force) {
             return;
         }
