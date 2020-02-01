@@ -82,6 +82,78 @@ class LevelController extends Controller
                 ],
             ],
         ],
+        'glass' => [
+            'image' => 'glass',
+            'name' => 'Stained Glass',
+            'timeLimit' => 300,
+            'debuffs' => [
+            ],
+            'colors' => [
+                [
+                    'hex' => '#ff0000',
+                ],
+                [
+                    'hex' => '#ff9900',
+                ],
+                [
+                    'hex' => '#e06666',
+                ],
+                [
+                    'hex' => '#f1c232',
+                ],
+                [
+                    'hex' => '#d9d9d9',
+                ],
+                [
+                    'hex' => '#00c910',
+                ],
+                [
+                    'hex' => '#93c47d',
+                ],
+                [
+                    'hex' => '#d9ead3',
+                ],
+                [
+                    'hex' => '#000000',
+                ],
+            ],
+        ],
+        'skeletor' => [
+            'image' => 'skeletor',
+            'name' => 'Skeletor',
+            'timeLimit' => 300,
+            'debuffs' => [
+            ],
+            'colors' => [
+                [
+                    'hex' => '#f5c358',
+                ],
+                [
+                    'hex' => '#ae7f35',
+                ],
+                [
+                    'hex' => '#4b270b',
+                ],
+                [
+                    'hex' => '#dfbc84',
+                ],
+                [
+                    'hex' => '#474458',
+                ],
+                [
+                    'hex' => '#553e79',
+                ],
+                [
+                    'hex' => '#28194e',
+                ],
+                [
+                    'hex' => '#748cce',
+                ],
+                [
+                    'hex' => '#000000',
+                ],
+            ],
+        ],
     ];
 
     public function index()
