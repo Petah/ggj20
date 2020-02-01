@@ -11,7 +11,10 @@ class LevelController extends Controller
         $levels = [];
         foreach (static::getImages() as $id => $data) {
             $repairImage = 'images/levels/' . $data['image'] . '-repair.png';
-            $actualImage = 'images/levels/' . $data['image'] . '-actual.png';
+            $actualImage = 'images/levels/' . $data['image'] . '-censored.png';
+            if (!is_file(public_path($actualImage))) {
+                $actualImage = 'images/levels/' . $data['image'] . '-actual.png';
+            }
             [$width, $height] = getimagesize(public_path($repairImage));
             $levels[] = [
                 'id' => $id,
@@ -33,10 +36,21 @@ class LevelController extends Controller
     public static function getImages()
     {
         return [
+            'dickbut' => [
+                'image' => 'dickbut',
+                'name' => 'D**kbut',
+                'timeLimit' => 60,
+                'debuffs' => [
+                ],
+                'colors' => [
+                    ['hex' => '#000000'],
+                    ['hex' => '#ffffff'],
+                ],
+            ],
             'smiley' => [
                 'image' => 'smiley',
                 'name' => 'Smiley Face',
-                'timeLimit' => 15,
+                'timeLimit' => 60,
                 'debuffs' => [
                     [
                         'startTime' => 10,
