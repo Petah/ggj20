@@ -83,7 +83,7 @@ class LevelController extends Controller
             'pikachu' => [
                 'image' => 'pikachu',
                 'name' => 'Pikachu',
-                'timeLimit' => 120,
+                'timeLimit' => 90,
                 'debuffs' => [],
                 'colors' => [
                     ['hex' => '#f8d42d'],
