@@ -40,13 +40,7 @@ class LevelController extends Controller
                 'image' => 'smiley',
                 'name' => 'Smiley Face',
                 'timeLimit' => 60,
-                'debuffs' => [
-                    [
-                        'startTime' => 10,
-                        'duration' => 5,
-                        'type' => 'drip',
-                    ],
-                ],
+                'debuffs' => [],
                 'colors' => [
                     ['hex' => '#f9db2c'],
                     ['hex' => '#000000'],
@@ -205,6 +199,28 @@ class LevelController extends Controller
                     ['hex' => '#5f4b31'],
                     ['hex' => '#837e5d'],
                     ['hex' => '#2d1f15'],
+                ],
+            ],
+            'behold-then-man' => [
+                'image' => 'behold-the-man',
+                'name' => 'Behold the Man',
+                'timeLimit' => 60,
+                'debuffs' => [],
+                'colors' => [
+                    ['hex' => '#89837d'],
+                    ['hex' => '#716757'],
+                    ['hex' => '#4d4c3f'],
+                    ['hex' => '#47484b'],
+                    ['hex' => '#352a27'],
+                    ['hex' => '#a58d61'],
+                    ['hex' => '#77633e'],
+                    ['hex' => '#784d32'],
+                    ['hex' => '#5e4c2e'],
+                    ['hex' => '#352a27'],
+                    ['hex' => '#2a1314'],
+                    ['hex' => '#1c1415'],
+                    ['hex' => '#000000'],
+                    ['hex' => '#ffffff'],
                 ],
             ],
         ];
