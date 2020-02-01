@@ -8,7 +8,9 @@ const ScoreController = function (
     AudioService,
 ) {
     const $ctrl = this;
-    const audio = new AudioService();
+    const tick = new Audio('/sounds/tick.mp3');
+    const tock = new Audio('/sounds/tock.mp3');
+    const gong = new Audio('/sounds/gong.mp3');
 
     let interval = null;
 
@@ -17,8 +19,10 @@ const ScoreController = function (
         if ($ctrl.timeRemaining >= 2) {
             $ctrl.bonus = 10000 * $ctrl.timeRemaining / $ctrl.levelTime
         }
+        $ctrl.finalScore = formatScore($ctrl.realScore, $ctrl.bonus);
         $ctrl.timeRemaining = 0;
         $ctrl.timeUp = true;
+        gong.play();
         $interval.cancel(interval);
         $('.g-score .modal').modal('show');
         $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
@@ -26,7 +30,6 @@ const ScoreController = function (
         }).catch((error) => {
             console.error(error);
         });
-        audio.stop("tickTock", true);
         $rootScope.$broadcast('timeUp');
     };
 
@@ -37,9 +40,28 @@ const ScoreController = function (
         });
     };
 
+    let lastTick = true;
+    let nextTick = null;
+    const playTick = () => {
+        if (lastTick) {
+            tick.play();
+        } else {
+            tock.play();
+        }
+        lastTick = !lastTick;
+        if ($ctrl.timeRemaining > 10) {
+            nextTick = $ctrl.timeRemaining - 1;
+        } else if ($ctrl.timeRemaining > 5) {
+            nextTick = $ctrl.timeRemaining - 0.5;
+        } else {
+            nextTick = $ctrl.timeRemaining - 0.25;
+        }
+    };
+
     $scope.$on('selectLevel', (event, level) => {
         $ctrl.levelTime = level.attributes.timeLimit;
         $ctrl.timeRemaining = $ctrl.levelTime;
+        nextTick = $ctrl.timeRemaining - 1;
         $ctrl.startTime = new Date().getTime();
         $ctrl.score = 0;
 
@@ -49,6 +71,9 @@ const ScoreController = function (
         }
         interval = $interval(() => {
             $ctrl.timeRemaining = ($ctrl.levelTime - ((new Date().getTime() - $ctrl.startTime) / 1000)).toFixed(2);
+            if ($ctrl.timeRemaining <= nextTick) {
+                playTick();
+            }
             $ctrl.timeRemainingFormatted = formatTimeRemaining($ctrl.timeRemaining);
             if ($ctrl.timeRemaining <= 0) {
                 timeUp();
@@ -63,7 +88,7 @@ const ScoreController = function (
                     $rootScope.$broadcast('debuff', debuff);
                 }
             }
-        }, 25);
+        }, 50);
     });
 
     const formatTimeRemaining = (timeRemaining) => {

@@ -36,7 +36,7 @@ class LevelController extends Controller
             'smiley' => [
                 'image' => 'smiley',
                 'name' => 'Smiley Face',
-                'timeLimit' => 60,
+                'timeLimit' => 15,
                 'debuffs' => [
                     [
                         'startTime' => 10,

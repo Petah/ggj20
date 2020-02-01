@@ -53,7 +53,8 @@ const AudioService = function() {
                 click: "/sounds/click.mp3",
                 paintBrush: "/sounds/paintbrush.mp3",
                 palette: "/sounds/palette.mp3",
-                tickTock: "/sounds/tick-tock.mp3",
+                tick: "/sounds/tick.mp3",
+                tock: "/sounds/tock.mp3",
             };
         }
     };
