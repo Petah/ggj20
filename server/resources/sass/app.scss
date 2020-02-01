@@ -202,8 +202,13 @@ g-palette {
     }
 
     .g-level-select-instructions {
-        margin-left: 140px;
+        margin-left: 130px;
         margin-top: 20px;
+        margin-bottom: 20px;
+        background: rgba(65, 150, 184, 0.35);
+        padding: 20px;
+        display: inline-block;
+        border-radius: 20px;
     }
 }
 
@@ -305,8 +310,8 @@ g-score {
 }
 
 .g-go {
-    width: 75px;
-    height: 75px;
+    width: 95px;
+    height: 95px;
     border: 0;
     background-image: url(/images/go.png);
     background-repeat: no-repeat;
