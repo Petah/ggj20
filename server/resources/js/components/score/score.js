@@ -42,7 +42,6 @@ const ScoreController = function (
         $ctrl.timeRemaining = $ctrl.levelTime;
         $ctrl.startTime = new Date().getTime();
         $ctrl.score = 0;
-        audio.play("tickTock", { loop: true });
 
         // Start timer
         if (interval) {

@@ -26,20 +26,6 @@ const AudioService = function() {
             loadedSound.seek(0);
         }
 
-        changePlaybackRate(sound, playbackRate = 1.0) {
-            const loadedSound = this.getSound(sound);
-            if (!loadedSound) {
-                return;
-            }
-
-            if (loadedSound.rate() === playbackRate) {
-                return;
-            }
-
-            loadedSound.rate(playbackRate);
-            loadedSound.play();
-        }
-
         getSound(sound, options = {}) {
             if (!this.sounds[sound]) {
                 const filename = AudioService.soundsList[sound];
