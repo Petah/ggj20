@@ -1,11 +1,16 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css?family=Concert+One&display=swap");
 
 // Internal Imports
 @import "common/mixins";
 @import "common/variables";
 
 @import "components/palette";
+
+@font-face {
+    font-family: "digital-7";
+    src: url("/fonts/digital-7-mono.ttf");
+}
 
 // Globals
 * {
@@ -15,7 +20,7 @@
 html,
 body {
     color: $black;
-    font-family: "Nunito", sans-serif;
+    font-family: "Concert One", cursive;
     font-size: 15px;
     font-weight: 200;
     margin: 0;
@@ -25,6 +30,8 @@ body {
     overflow: hidden;
     width: 100%;
     position: fixed;
+
+    background-image: url(/images/wall.png);
 }
 
 .g-number {
@@ -84,6 +91,34 @@ body {
     button {
         cursor: url(/images/brush-small.png) 0 32, auto !important;
     }
+
+    .g-palette-background {
+        background-image: url(/images/palette-empty.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 478px;
+        height: 355px;
+        padding-top: 29px;
+        padding-left: 147px;
+
+        .g-palette-colors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 19px;
+            text-align: center;
+            width: 330px;
+
+            .btn {
+                width: 56px;
+                height: 56px;
+                border: 8px solid red;
+                border-radius: 12px;
+                display: inline-block;
+            }
+        }
+    }
 }
 
 .g-level-select {
@@ -95,5 +130,31 @@ body {
         cursor: pointer;
         text-align: center;
         border: 1px solid #aaa;
+    }
+}
+
+.g-score {
+    margin-top: 2rem;
+    .g-score-clock {
+        position: relative;
+        background-image: url(/images/clock.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 408px;
+        height: 234px;
+
+        .g-score-clock-background {
+            opacity: 0.1;
+        }
+
+        .g-score-clock-background,
+        .g-score-clock-foreground {
+            position: absolute;
+            top: 64px;
+            left: 92px;
+            font-size: 100px;
+            font-family: "digital-7", sans-serif;
+            color: #B63A3F;
+        }
     }
 }

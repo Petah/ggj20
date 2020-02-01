@@ -2,6 +2,21 @@
     <g-level-select></g-level-select>
     <div class="row">
         <div class="col">
+            <div class="text-center">
+                <g-score
+                    ng-show="$ctrl.level"
+                    class="d-inline-block"
+                ></g-score>
+                <div>
+                    <button type="button" class="btn btn-primary" onclick="location.reload()">Reload</button>
+                </div>
+            </div>
+            <g-palette
+                g-on-color-change="$ctrl.onPaletteColorChange(color)"
+                ng-show="$ctrl.level"
+            ></g-palette>
+        </div>
+        <div class="col">
             <g-canvas
                 g-brush="$ctrl.brush"
                 g-on-start-stroke="$ctrl.onBrushStartStroke(point)"
@@ -9,19 +24,6 @@
                 g-on-end-stroke="$ctrl.onBrushEndStroke(event)"
                 ng-show="$ctrl.level"
             ></g-canvas>
-        </div>
-        <div class="col">
-            <div class="text-center">
-                <h1>Repainter</h1>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="location.reload()">Reload</button>
-            <g-score
-                ng-show="$ctrl.level"
-            ></g-score>
-            <g-palette
-                g-on-color-change="$ctrl.onPaletteColorChange(color)"
-                ng-show="$ctrl.level"
-            ></g-palette>
         </div>
     </div>
 </div>

@@ -1,8 +1,9 @@
 <div class="g-score">
-    <h1>SCORE</h1>
-    {{ $ctrl.score }}
-    <h1>TIMER</h1>
-    {{ $ctrl.timeRemaining }}
+    <div class="g-score-clock">
+        <div class="g-score-clock-background">88:88</div>
+        <div class="g-score-clock-foreground">{{ $ctrl.timeRemainingFormatted }}</div>
+    </div>
+    <div>{{ $ctrl.score }}</div>
 
     <div class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

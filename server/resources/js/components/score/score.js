@@ -22,6 +22,7 @@ const ScoreController = function (
         }
         interval = $interval(() => {
             $ctrl.timeRemaining = ($ctrl.levelTime - ((new Date().getTime() - $ctrl.startTime) / 1000)).toFixed(2);
+            $ctrl.timeRemainingFormatted = formatTimeRemaining($ctrl.timeRemaining);
             if ($ctrl.timeRemaining <= 0) {
                 $ctrl.timeRemaining = 0;
                 $interval.cancel(interval);
@@ -46,10 +47,27 @@ const ScoreController = function (
         }, 25);
     });
 
+    const formatTimeRemaining = (timeRemaining) => {
+        var secNum = parseInt(timeRemaining, 10);
+        var hours = Math.floor(secNum / 3600);
+        var minutes = Math.floor((secNum - (hours * 3600)) / 60);
+        var seconds = secNum - (hours * 3600) - (minutes * 60);
+
+        if (minutes < 10) { minutes = "0" + minutes; }
+        if (seconds < 10) { seconds = "0" + seconds; }
+        return minutes + ':' + seconds;
+    };
+
+    const formatScore = (score) => {
+        if (score < 0) {
+            return (score * 100).toFixed();
+        }
+        return (score * 1000).toFixed();
+    };
+
     $scope.$on('comparison', (event, comparison) => {
         console.log('Comparison', comparison);
-        $ctrl.score = (comparison.attributes.score * 1000).toFixed();
-        // $ctrl.score = ((comparison.attributes.score - 50) * 1000).toFixed();
+        $ctrl.score = formatScore(comparison.attributes.score);
     });
 
     $ctrl.submitScore = () => {
