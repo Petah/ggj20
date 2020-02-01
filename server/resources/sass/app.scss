@@ -9,7 +9,6 @@
 
 // Globals
 * {
-    cursor: url(/images/brush-small.png) 0 32, auto;
     user-select: none;
 }
 
@@ -37,6 +36,7 @@ body {
 
 .g-canvas {
     padding: 2rem;
+    cursor: url(/images/brush-small.png) 0 32, auto;
 
     .g-canvas-background {
         width: 800px;
@@ -67,6 +67,10 @@ body {
 .g-palette {
     img {
         max-width: 500px;
+    }
+
+    button {
+        cursor: url(/images/brush-small.png) 0 32, auto !important;
     }
 }
 
