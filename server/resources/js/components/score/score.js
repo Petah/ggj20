@@ -67,6 +67,7 @@ const ScoreController = function (
 
     $scope.$on('comparison', (event, comparison) => {
         console.log('Comparison', comparison);
+        $ctrl.realScore = comparison.attributes.score;
         $ctrl.score = formatScore(comparison.attributes.score);
     });
 
@@ -89,9 +90,27 @@ const ScoreController = function (
             console.error(error);
         });
     };
+
     $scope.$on('selectLevel', (event, level) => {
         $ctrl.level = level;
     });
+
+    $ctrl.getArrowRotation = () => {
+        const score = parseInt($ctrl.score);
+        if (!$ctrl.realScore) {
+            return 'rotate(0deg)';
+        }
+        const max = 130;
+        const min = -125;
+        if ($ctrl.realScore > 0) {
+            return 'rotate(' + ($ctrl.realScore / 100 * max) + 'deg)';
+        }
+        let neg = -$ctrl.realScore / 100 * min;
+        if (neg < min) {
+            neg = min;
+        }
+        return 'rotate(' + neg + 'deg)';
+    }
 };
 
 ScoreController.$inject = [

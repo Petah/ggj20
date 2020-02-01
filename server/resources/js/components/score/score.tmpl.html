@@ -4,7 +4,13 @@
             <div class="g-score-clock-background">88:88</div>
             <div class="g-score-clock-foreground">{{ $ctrl.timeRemainingFormatted }}</div>
         </div>
-        <div>{{ $ctrl.score }}</div>
+        <!-- <div>{{ $ctrl.score }} {{ $ctrl.realScore }}</div> -->
+        <div class="g-score-gauge">
+            <div class="g-score-gauge-arrow" ng-style="{transform: $ctrl.getArrowRotation()}">
+            </div>
+            <div class="g-score-gauge-stop">
+            </div>
+        </div>
     </div>
 
     <div class="modal" tabindex="-1" role="dialog">

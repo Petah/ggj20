@@ -19,14 +19,14 @@
                         </div>
                     </div>
                     <div ng-show="$ctrl.state == 'level-select'">
-                        <h2 class="text-center">Select level</h2>
+                        <h1 class="text-center">Select level</h1>
                         <div class="g-level-select-arrows">
                             <div>
                                 <img draggable="false" class="g-level-select-arrow" ng-src="/images/arrow-left.png" ng-click="$ctrl.prevLevel()" />
                             </div>
                             <div ng-repeat="level in $ctrl.levels" ng-show="$ctrl.levelIndex == $index" class="g-level-select-level" ng-click="$ctrl.selectLevel(level)">
                                 <img draggable="false" ng-src="{{ level.attributes.actual }}" />
-                                <h2>{{ level.attributes.name }}</h2>
+                                <p>{{ level.attributes.name }}</p>
                             </div>
                             <div>
                                 <img draggable="false" class="g-level-select-arrow" ng-src="/images/arrow-right.png" ng-click="$ctrl.nextLevel()" />

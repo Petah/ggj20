@@ -86,19 +86,19 @@ class CompareController extends Controller
         // var_dump("RESIZED SIZE: width: $resizedWidth, height: $resizedHeight");
 
         $resizedRepairImage = imagecreatetruecolor($resizedWidth, $resizedHeight);
-        ImageColorTransparent($resizedRepairImage, imagecolorallocate($resizedRepairImage, 0, 0, 0));
-        ImageAlphaBlending($resizedRepairImage, false);
-        ImageCopyResampled($resizedRepairImage, $repairImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($repairImage), ImageSY($repairImage));
+        imagecolortransparent($resizedRepairImage, imagecolorallocate($resizedRepairImage, 0, 0, 0));
+        imagealphablending($resizedRepairImage, false);
+        imagecopyresampled($resizedRepairImage, $repairImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, imagesx($repairImage), imagesy($repairImage));
 
         $resizedUserImage = imagecreatetruecolor($resizedWidth, $resizedHeight);
-        ImageColorTransparent($resizedUserImage, imagecolorallocate($resizedUserImage, 0, 0, 0));
-        ImageAlphaBlending($resizedUserImage, false);
-        ImageCopyResampled($resizedUserImage, $userImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($userImage), ImageSY($userImage));
+        imagecolortransparent($resizedUserImage, imagecolorallocate($resizedUserImage, 0, 0, 0));
+        imagealphablending($resizedUserImage, false);
+        imagecopyresampled($resizedUserImage, $userImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, imagesx($userImage), imagesy($userImage));
 
         $resizedActualImage = imagecreatetruecolor($resizedWidth, $resizedHeight);
-        ImageColorTransparent($resizedActualImage, imagecolorallocate($resizedActualImage, 0, 0, 0));
-        ImageAlphaBlending($resizedActualImage, false);
-        ImageCopyResampled($resizedActualImage, $actualImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, ImageSX($actualImage), ImageSY($actualImage));
+        imagecolortransparent($resizedActualImage, imagecolorallocate($resizedActualImage, 0, 0, 0));
+        imagealphablending($resizedActualImage, false);
+        imagecopyresampled($resizedActualImage, $actualImage, 0, 0, 0, 0, $resizedWidth, $resizedHeight, imagesx($actualImage), imagesy($actualImage));
 
         $repairImageWidth = imagesx($resizedRepairImage);
         $repairImageHeight = imagesy($resizedRepairImage);

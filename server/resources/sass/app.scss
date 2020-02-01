@@ -164,6 +164,14 @@ g-palette {
         max-width: 100px;
     }
 
+    h1 {
+        font-size: 80px;
+    }
+
+    p {
+        font-size: 30px;
+    }
+
     .g-level-select-level {
         cursor: pointer;
         text-align: center;
@@ -215,6 +223,44 @@ g-score {
             color: #b63a3f;
         }
     }
+
+    .g-score-gauge {
+        position: relative;
+        background-image: url(/images/gauge-body.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 350px;
+        height: 300px;
+        margin: auto;
+        margin-top: 1em;
+    }
+
+    .g-score-gauge-arrow {
+        position: absolute;
+        left: 50%;
+        top: 10px;
+        margin-left: -20px;
+        background-image: url(/images/gauge-arrow.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 45px;
+        height: 150px;
+        transform: rotate(0deg);
+        transform-origin: 22.5px 109px;
+        transition: transform 1s linear;
+    }
+
+    .g-score-gauge-stop {
+        position: absolute;
+        left: 50%;
+        top: 70px;
+        margin-left: -50px;
+        background-image: url(/images/gauge-stop.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 100px;
+        height: 100px;
+    }
 }
 
 .modal-content {
@@ -231,4 +277,20 @@ g-score {
     position: absolute;
     right: -50px;
     bottom: -100px;
+}
+
+.g-floor {
+    background-image: url(/images/floor.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    bottom: 0;
+    width: 100vw;
+    height: 200px;
+    position: absolute;
+    border-top: 2px solid black;
+    background-color: black;
+}
+
+.modal-backdrop {
+    display: none !important;
 }
