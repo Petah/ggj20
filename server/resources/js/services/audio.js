@@ -47,8 +47,8 @@ class AudioService {
             paintBrush: "/sounds/paintbrush.mp3",
             palette: "/sounds/palette.mp3",
             gong: "/sounds/gong.mp3",
-            tick: "/sounds/tick.mp3",
-            tock: "/sounds/tock.mp3",
+            tick: "/sounds/tick.wav",
+            tock: "/sounds/tock.wav",
         };
     }
 }
