@@ -1,18 +1,17 @@
 <div class="g-score">
-    <div class="g-score-clock">
-        <div class="g-score-clock-background">88:88</div>
-        <div class="g-score-clock-foreground">{{ $ctrl.timeRemainingFormatted }}</div>
+    <div class="text-center">
+        <div class="g-score-clock">
+            <div class="g-score-clock-background">88:88</div>
+            <div class="g-score-clock-foreground">{{ $ctrl.timeRemainingFormatted }}</div>
+        </div>
+        <div>{{ $ctrl.score }}</div>
     </div>
-    <div>{{ $ctrl.score }}</div>
 
     <div class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Well done!</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <p>

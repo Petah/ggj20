@@ -1,28 +1,44 @@
 <div class="g-level-select">
     <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Welcome to Repainter</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <div class="modal-body">
-                    <p>
-                        Your task is to repair damaged clip art and paintings. You your paint palette to select the
-                        colors and repaint the damaged areas of the image.
-                    </p>
-
-                    <h2>Select your level</h2>
-                    <div class="row">
-                        <div ng-repeat="level in $ctrl.levels" class="col g-level-select-level" ng-click="$ctrl.selectLevel(level)">
-                            <div>{{ level.attributes.name }}</div>
-                            <img ng-src="{{ level.attributes.url }}" />
+                    <div ng-show="$ctrl.state == 'welcome'">
+                        <h1>Repainter</h1>
+                        <p class="mb-0">
+                            <b>INSTRUCTIONS:</b>
+                        </p>
+                        <ul>
+                            <li>Pick your level</li>
+                            <li>Fix the damaged painting</li>
+                            <li>Choose colors and size in the palette</li>
+                            <li>Get points based on accuracy and speed</li>
+                        </ul>
+                        <div class="text-center">
+                            <button class="btn btn-primary" ng-click="$ctrl.state = 'level-select'">Go</button>
+                        </div>
+                    </div>
+                    <div ng-show="$ctrl.state == 'level-select'">
+                        <h2 class="text-center">Select level</h2>
+                        <div class="g-level-select-arrows">
+                            <div>
+                                <img draggable="false" class="g-level-select-arrow" ng-src="/images/arrow-left.png" ng-click="$ctrl.prevLevel()" />
+                            </div>
+                            <div ng-repeat="level in $ctrl.levels" ng-show="$ctrl.levelIndex == $index" class="g-level-select-level" ng-click="$ctrl.selectLevel(level)">
+                                <img draggable="false" ng-src="{{ level.attributes.actual }}" />
+                                <h2>{{ level.attributes.name }}</h2>
+                            </div>
+                            <div>
+                                <img draggable="false" class="g-level-select-arrow" ng-src="/images/arrow-right.png" ng-click="$ctrl.nextLevel()" />
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary" ng-click="$ctrl.selectLevel($ctrl.levels[$ctrl.levelIndex])">Go</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <img draggable="false" class="g-clippy" src="/images/clippy.png" />
         </div>
     </div>
 </div>

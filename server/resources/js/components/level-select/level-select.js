@@ -1,7 +1,10 @@
 const tmpl = require('./level-select.tmpl.html');
 
-const LevelSelectController = function($http, $rootScope) {
+const LevelSelectController = function ($http, $rootScope) {
     const $ctrl = this;
+
+    $ctrl.state = 'welcome';
+    $ctrl.levelIndex = 0;
 
     $http
         .get('/api/level/list')
@@ -18,6 +21,24 @@ const LevelSelectController = function($http, $rootScope) {
         $rootScope.$broadcast('selectLevel', level);
     };
 
+    $ctrl.nextLevel = () => {
+        $ctrl.levelIndex++;
+        if ($ctrl.levelIndex >= $ctrl.levels.length) {
+            $ctrl.levelIndex = 0;
+        }
+    };
+
+    $ctrl.prevLevel = () => {
+        $ctrl.levelIndex--;
+        if ($ctrl.levelIndex < 0) {
+            $ctrl.levelIndex = $ctrl.levels.length - 1;
+        }
+    };
+
+    $('.g-level-select .modal').modal({
+        backdrop: 'static',
+        keyboard: false,
+    });
     $('.g-level-select .modal').modal('show');
 };
 
