@@ -13,7 +13,7 @@
 }
 
 // Globals
-* {
+*:not(input) {
     user-select: none;
 }
 
@@ -157,6 +157,15 @@ g-palette {
             }
         }
     }
+
+    .g-palette-selected {
+        box-shadow: 0 0 0 0.2rem #e6b200 !important;
+    }
+
+    .btn:focus {
+        outline: 0;
+        box-shadow: none;
+    }
 }
 
 .g-level-select {
@@ -261,6 +270,66 @@ g-score {
         width: 100px;
         height: 100px;
     }
+
+    .modal-body {
+        overflow: hidden;
+        max-height: 540px;
+    }
+}
+
+.p-game-reload {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    width: 75px;
+    height: 75px;
+    border: 0;
+    background-image: url(/images/info.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 10000;
+    border-radius: 75px !important;
+
+    &:hover {
+        background-color: transparent;
+        border: 0;
+    }
+}
+
+.g-go {
+    width: 75px;
+    height: 75px;
+    border: 0;
+    background-image: url(/images/go.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 10000;
+    border-radius: 75px !important;
+
+    &:hover {
+        background-color: transparent;
+        border: 0;
+    }
+}
+
+.g-floor {
+    background-image: url(/images/floor.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    bottom: 0;
+    width: 100vw;
+    height: 300px;
+    position: absolute;
+    border-top: 2px solid black;
+    background-color: black;
+}
+
+.modal-backdrop {
+    display: none !important;
 }
 
 .modal-content {
@@ -277,20 +346,5 @@ g-score {
     position: absolute;
     right: -50px;
     bottom: -100px;
-}
-
-.g-floor {
-    background-image: url(/images/floor.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    bottom: 0;
-    width: 100vw;
-    height: 200px;
-    position: absolute;
-    border-top: 2px solid black;
-    background-color: black;
-}
-
-.modal-backdrop {
-    display: none !important;
+    max-width: 130px;
 }

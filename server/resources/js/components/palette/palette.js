@@ -3,9 +3,11 @@ const tmpl = require('./palette.tmpl.html');
 const PaletteController = function($scope, $rootScope) {
     const $ctrl = this;
     $ctrl.colors = [];
+    $ctrl.color = null;
 
     $ctrl.changeColor = color => {
         console.log('Change color', color);
+        $ctrl.color = color;
         $rootScope.$broadcast('changeColor', color);
     };
 
@@ -16,6 +18,11 @@ const PaletteController = function($scope, $rootScope) {
 
     $scope.$on('timeUp', (event, level) => {
         $ctrl.colors = [];
+        $ctrl.level = null;
+    });
+
+    $scope.$on('selectLevel', (event, level) => {
+        $ctrl.level = level;
     });
 };
 

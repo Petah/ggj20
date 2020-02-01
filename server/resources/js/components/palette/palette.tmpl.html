@@ -1,7 +1,7 @@
-<div class="g-palette">
+<div class="g-palette" ng-show="$ctrl.level">
     <div class="g-palette-background">
         <div class="g-palette-colors">
-            <button ng-repeat="color in $ctrl.colors" class="btn" type="button" ng-style="{ backgroundColor: color.hex }" ng-click="$ctrl.changeColor(color)"></button>
+            <button ng-repeat="color in $ctrl.colors" class="btn" type="button" ng-style="{ backgroundColor: color.hex }" ng-click="$ctrl.changeColor(color)" ng-class="{'g-palette-selected': $ctrl.color == color}"></button>
         </div>
     </div>
 </div>

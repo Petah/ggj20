@@ -25,6 +25,7 @@ const ScoreController = function (
             $ctrl.timeRemainingFormatted = formatTimeRemaining($ctrl.timeRemaining);
             if ($ctrl.timeRemaining <= 0) {
                 $ctrl.timeRemaining = 0;
+                $ctrl.timeUp = true;
                 $interval.cancel(interval);
                 $('.g-score .modal').modal('show');
                 $http.get('/api/high-score/fetch/' + $ctrl.level.id).then((response) => {
@@ -78,7 +79,7 @@ const ScoreController = function (
                 attributes: {
                     playerName: $ctrl.playerName,
                     levelId: $ctrl.level.id,
-                    score: $ctrl.score,
+                    score: $ctrl.realScore,
                 },
             },
         }).then((response) => {
@@ -90,10 +91,6 @@ const ScoreController = function (
             console.error(error);
         });
     };
-
-    $scope.$on('selectLevel', (event, level) => {
-        $ctrl.level = level;
-    });
 
     $ctrl.getArrowRotation = () => {
         const score = parseInt($ctrl.score);
@@ -111,6 +108,10 @@ const ScoreController = function (
         }
         return 'rotate(' + neg + 'deg)';
     }
+
+    $scope.$on('selectLevel', (event, level) => {
+        $ctrl.level = level;
+    });
 };
 
 ScoreController.$inject = [

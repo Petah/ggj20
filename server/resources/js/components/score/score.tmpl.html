@@ -1,5 +1,5 @@
 <div class="g-score">
-    <div class="text-center">
+    <div class="text-center" ng-show="!$ctrl.timeUp">
         <div class="g-score-clock">
             <div class="g-score-clock-background">88:88</div>
             <div class="g-score-clock-foreground">{{ $ctrl.timeRemainingFormatted }}</div>
@@ -14,27 +14,30 @@
     </div>
 
     <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Well done!</h5>
-                </div>
                 <div class="modal-body">
-                    <p>
-                        Your scored {{ $ctrl.score }}!
-                        <div ng-show="!$ctrl.submittingScore && !$ctrl.submittedScore">
-                            <input type="text" class="form-control" ng-model="$ctrl.playerName" />
-                            <button type="button" class="btn btn-primary" ng-click="$ctrl.submitScore()">Submit score</button>
-                        </div>
+                    <h1 ng-show="$ctrl.score > 1000">Well done!</h1>
+                    <h1 ng-show="$ctrl.score < 1000 && $ctrl.score > -1000">Nice try!</h1>
+                    <h1 ng-show="$ctrl.score < -1000">Bad luck!</h1>
+                    <div>
+                        You scored {{ $ctrl.score }}!
                         <div class="progress" ng-show="$ctrl.submittingScore && !$ctrl.submittedScore">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
                         </div>
-                    </p>
-                    <h2>
+
+                        <div class="input-group mb-3" ng-show="!$ctrl.submittingScore && !$ctrl.submittedScore">
+                            <input type="text" class="form-control" placeholder="Your name..." ng-model="$ctrl.playerName">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" ng-click="$ctrl.submitScore()">Submit score</button>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>
                         High scores
-                    </h2>
+                    </h3>
                     <div>
-                        <table class="table">
+                        <table class="table table-sm">
                             <tr ng-repeat="highScore in $ctrl.highScores">
                                 <td>{{ highScore.attributes.playerName }}</td>
                                 <td class="g-number">{{ highScore.attributes.timeAgo }}</td>
@@ -50,6 +53,7 @@
                     <button type="button" class="btn btn-primary" onclick="location.reload()">Select level</button>
                 </div>
             </div>
+            <img draggable="false" class="g-clippy" src="/images/clippy.png" />
         </div>
     </div>
 </div>

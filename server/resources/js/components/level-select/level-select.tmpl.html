@@ -15,7 +15,7 @@
                             <li>Get points based on accuracy and speed</li>
                         </ul>
                         <div class="text-center">
-                            <button class="btn btn-primary" ng-click="$ctrl.state = 'level-select'">Go</button>
+                            <button class="btn btn-primary g-go" ng-click="$ctrl.state = 'level-select'"></button>
                         </div>
                     </div>
                     <div ng-show="$ctrl.state == 'level-select'">
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary" ng-click="$ctrl.selectLevel($ctrl.levels[$ctrl.levelIndex])">Go</button>
+                            <button class="btn btn-primary g-go" ng-click="$ctrl.selectLevel($ctrl.levels[$ctrl.levelIndex])"></button>
                         </div>
                     </div>
                 </div>
