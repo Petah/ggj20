@@ -48,15 +48,23 @@ const CanvasController = function (
     const mouseMove = (event) => {
         // console.log('Canvas mouse move', $ctrl.drawing, event);
         event.preventDefault();
-        if (!$ctrl.drawing) {
-            return;
-        }
 
 
         const point = getEventPosition(event);
         // console.log('Point', point, $ctrl.lastPoint)
         if (!$ctrl.lastPoint) {
             $ctrl.lastPoint = point;
+        }
+
+        $('.g-canvas-brush').css('left', point[0] + 75 - (25 / 2));
+        $('.g-canvas-brush').css('top', point[1] + 102 - (25 / 2));
+        // $ctrl.context.beginPath();
+        // $ctrl.context.arc(point[0], point[1], 25, 0, 2 * Math.PI);
+        // $ctrl.context.stroke();
+        // $ctrl.context.endPath();
+
+        if (!$ctrl.drawing) {
+            return;
         }
 
         if ($ctrl.color) {

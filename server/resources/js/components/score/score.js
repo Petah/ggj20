@@ -39,6 +39,7 @@ const ScoreController = function (
                 const debuff = level.attributes.debuffs[i]
                 if (debuff.startTime > $ctrl.levelTime - $ctrl.timeRemaining) {
                     level.attributes.debuffs.splice(i, 1);
+                    console.log('Debuff', debuff);
                     $rootScope.$broadcast('debuff', debuff);
                 }
             }
@@ -47,7 +48,7 @@ const ScoreController = function (
 
     $scope.$on('comparison', (event, comparison) => {
         console.log('Comparison', comparison);
-        $ctrl.score = comparison.attributes.score;
+        $ctrl.score = (comparison.attributes.score * 1000).toFixed();
         // $ctrl.score = ((comparison.attributes.score - 50) * 1000).toFixed();
     });
 

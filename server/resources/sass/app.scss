@@ -62,6 +62,18 @@ body {
         margin-top: 102px;
         margin-left: 75px;
     }
+
+    .g-canvas-brush {
+        width: 25px;
+        height: 25px;
+        border-radius: 25px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 1px solid black;
+        pointer-events: none;
+        cursor: url(/images/brush-small.png) 0 32, auto;
+    }
 }
 
 .g-palette {
