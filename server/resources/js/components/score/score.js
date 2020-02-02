@@ -121,9 +121,9 @@ const ScoreController = function (
         score = parseFloat(score || 0);
         bonus = parseFloat(bonus || 0);
         if (score < 0) {
-            return (score * 100).toFixed();
+            return parseInt((score * 100).toFixed());
         }
-        return (score * 1000 + bonus).toFixed();
+        return parseInt((score * 1000 + bonus).toFixed());
     };
 
     $scope.$on('comparison', (event, comparison) => {

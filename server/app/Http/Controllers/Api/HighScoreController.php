@@ -26,7 +26,7 @@ class HighScoreController extends Controller
 
     private function getHighScores(string $levelId, ?HighScore $newHighScore = null)
     {
-        $highScores = HighScore::where('level_id', $levelId)->orderBy('score', 'desc')->limit(5)->get();
+        $highScores = HighScore::where('level_id', $levelId)->orderBy('score', 'desc')->get();
         return [
             'data' => $highScores->map(function ($highScore) use ($newHighScore) {
                 return [
