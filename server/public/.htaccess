@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
+    RewriteCond %{HTTP_HOST} !^ggj20\.versite\.co\.nz [NC]
+    RewriteRule ^(.*) https://ggj20.versite.co.nz%{REQUEST_URI} [END,NE,R=permanent]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
