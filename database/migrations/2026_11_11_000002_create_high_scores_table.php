@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('high_scores', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUlid('round_id')->unique()->constrained()->cascadeOnDelete();
+            $table->string('level_id', 64);
+            $table->string('player_name', 24);
+            $table->decimal('score', 8, 3);
+            $table->unsignedInteger('bonus')->default(0);
+            $table->timestamps();
+
+            $table->index(['level_id', 'score']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('high_scores');
+    }
+};
