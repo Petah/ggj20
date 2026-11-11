@@ -136,9 +136,12 @@ class PaintingScorer
     private function blurredGrid(GdImage $image): array
     {
         $size = self::GRID;
+        // Flatten onto white: a transparent pixel can store any colour (a browser
+        // canvas uses black, a PNG file often white), so without this the
+        // background of a transparent level would count as wrong.
         $small = imagecreatetruecolor($size, $size);
-        imagecolortransparent($small, (int) imagecolorallocate($small, 0, 0, 0));
-        imagealphablending($small, false);
+        imagefill($small, 0, 0, (int) imagecolorallocate($small, 255, 255, 255));
+        imagealphablending($small, true);
         imagecopyresampled($small, $image, 0, 0, 0, 0, $size, $size, imagesx($image), imagesy($image));
 
         $pixels = [];

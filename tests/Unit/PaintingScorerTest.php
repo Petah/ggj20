@@ -25,6 +25,23 @@ it('gives an untouched painting 0', function (string $levelId) {
     expect($this->scorer->score($repair, $repair, PaintingScorer::imageFromFile($level->originalPath())))->toEqualWithDelta(0.0, 0.001);
 })->with('levels');
 
+it('treats transparent pixels the same whatever colour they store', function () {
+    // A browser canvas stores transparent pixels as black; level PNGs often store
+    // them as white. An untouched painting must still score 0.
+    $level = app(LevelRepository::class)->findOrFail('kiwi');
+    $repair = PaintingScorer::imageFromFile($level->repairPath());
+
+    $canvas = imagecreatetruecolor(imagesx($repair), imagesy($repair));
+    imagealphablending($canvas, false);
+    imagesavealpha($canvas, true);
+    imagefill($canvas, 0, 0, (int) imagecolorallocatealpha($canvas, 0, 0, 0, 127));
+    imagealphablending($canvas, true);
+    imagecopy($canvas, $repair, 0, 0, 0, 0, imagesx($repair), imagesy($repair));
+
+    expect($this->scorer->score($canvas, $repair, PaintingScorer::imageFromFile($level->originalPath())))
+        ->toEqualWithDelta(0.0, 0.5);
+});
+
 it('scores a wiped canvas below zero', function () {
     $level = app(LevelRepository::class)->findOrFail('smiley');
     $blank = PaintingScorer::imageFromDataUrl(blankPainting());

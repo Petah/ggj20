@@ -1,13 +1,41 @@
 <?php
 
 /*
-| Levels: each one is a painting to repair. Images are in public/images/levels:
-| "{image}-actual.png" is the original and "{image}-repair.png" is the splattered
-| version the player starts from. "image" defaults to the level's key.
-| "colors" is the palette offered to the player.
+| Levels: each one is a painting to repair. The splattered version the player
+| starts from is public/images/levels/{image}-repair.png; the original is
+| resources/levels/{image}-actual.png, kept private until a round ends.
+| "image" defaults to the level's key. "colors" is the palette offered to the player.
 */
 
 return [
+    // Original art made for the 2026 update.
+    'kiwi' => [
+        'name' => 'Kiwi',
+        'time_limit' => 60,
+        'colors' => ['#392b3e', '#946044', '#c99462', '#efbc59', '#fff1d6'],
+    ],
+    'pavlova' => [
+        'name' => 'Pavlova',
+        'time_limit' => 120,
+        'colors' => ['#392b3e', '#fff1d6', '#ee5263', '#83bb51', '#64bfcb', '#e6b66a'],
+    ],
+    'rocket' => [
+        'name' => 'Rocket',
+        'time_limit' => 60,
+        'colors' => ['#392b3e', '#fff1d6', '#ef6560', '#64bfcb', '#f39b48', '#f6cd58'],
+    ],
+    'sunset' => [
+        'name' => 'Sunset',
+        'time_limit' => 90,
+        'colors' => ['#392b3e', '#f3aa88', '#f6cd58', '#a77fb0', '#d17b91', '#64bfcb'],
+    ],
+    'robot' => [
+        'name' => 'Robot',
+        'time_limit' => 90,
+        'colors' => ['#392b3e', '#64bfcb', '#fff1d6', '#ef6560', '#f6cd58', '#c5e7eb'],
+    ],
+
+    // Levels from the 2020 jam.
     'smiley' => [
         'name' => 'Smiley Face',
         'time_limit' => 60,
