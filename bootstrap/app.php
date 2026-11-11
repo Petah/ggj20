@@ -13,7 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // In production requests arrive through a local reverse proxy, so read the
+        // player's IP (used for rate limiting) from X-Forwarded-For.
+        $middleware->trustProxies(at: ['127.0.0.1', '::1']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
