@@ -8,7 +8,7 @@ Made by David Neilsen, Rey Benher and Joey Lee.
 
 ## How it works
 
-- `server/resources/js/` is the game: an AngularJS app with components for level select, the canvas, the palette and scoring. Some levels throw in "debuffs" partway through, like an enlarged brush or dripping paint.
+- `server/resources/js/` is the game: an AngularJS app with components for level select, the canvas, the palette and scoring. The level data also has "debuffs" (enlarge and drip) planned for partway through a level, but they weren't finished during the jam.
 - `server/app/Http/Controllers/Api/` is a small Laravel 6 API:
   - `LevelController` lists the levels, their colours and time limits.
   - `CompareController` scores a painting. It shrinks your painting and the original, blurs both, and counts how many pixels match within a colour tolerance.
